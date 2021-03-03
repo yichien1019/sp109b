@@ -1,5 +1,5 @@
 # 📝系統程式第一週筆記20210224
-## 評分方式
+## 👉評分方式
 * 期中成績(=筆記) 40%
 * 期末成績(=專案) 40%
 * 上課問問題 20%
@@ -16,7 +16,7 @@
 * 常見的系統軟體包含：作業系統 (operating system)、編譯器 (compiler)、直譯器 (interpreter)、連結器 (linker)、載入器 (loader)、組譯器 (assembly)、除錯器 (debugger)、硬體驅動程式 (driver)、公用程式
 
 
-## 遇到困難
+## 📢遇到困難
 * Q.問題:打gcc跑出gcc not found   
 * A.解決方式:上網收尋<br>
 [用VScode編譯並執行c/c++程式](https://ithelp.ithome.com.tw/articles/10212393)<br>(控制台->內容->進階系統設定->環境變數)
