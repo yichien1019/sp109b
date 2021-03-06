@@ -5,7 +5,7 @@
 * 虛擬機(Virtual Machine)
 * 作業系統(Operating System)
 ## 📖 編譯組譯流程圖
-![](main.jpg)
+![](main.JPG)
 ## 📖 編譯器的工作流程
 ![](system.jpg)
  * 原始碼（source code）→ 預處理器（preprocessor）→ 編譯器（compiler）→ 組譯程式（assembler）→ 目的碼（object code）→ 連結器（linker）→ 執行檔（executables）   
