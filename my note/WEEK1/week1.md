@@ -4,7 +4,7 @@
 * 期末成績(=專案) 40%
 * 上課問問題 20%
 ## 💻 系統程式教學順序
-![](https://image.slidesharecdn.com/ch01-170322102608/95/1-16-638.jpg?cb=1490178759)
+![](class.jpg)
 
 ##  📖 系統程式 & 系統軟體
 ### 系統程式(System programming)
@@ -23,7 +23,7 @@
 
 
 ## 📖 什麼是[gcc](https://kknews.cc/zh-tw/code/jlzpaae.html)??
-![](https://cache.yisu.com/upload/information/20200215/31/7079.jpg)
+![](gcc.jpg)
 * gcc是"GNU Compiler Collection"的縮寫，從字面意思可以知道它是一個編譯器集。gcc不止可以編譯器c語言，還能用於c++，java，object-C等語言程序。但是在這裡，我們的嵌入式學習中，目前只去關注gcc在C語言方面的編譯功能
 ### 1.字尾和檔案間的關係
 檔案字尾 | 檔案類型
@@ -56,7 +56,7 @@
 
 
 ##  📖 什麼是[Makefile](https://hackmd.io/@sysprog/SySTMXPvl)??
-![](https://3.bp.blogspot.com/-gj_9hTpVvOc/WmRSjjsjNKI/AAAAAAABXTA/UyKE7lC8bw8259sfrqEngwh4FA0zKsiGACLcBGAs/s1600/Makefile.png)
+![](Makefile.png)
 ### 1.常用符號
 符號 | 功能
 -----|--------
@@ -83,8 +83,8 @@ $@ : 屬於目標條件，也就是 foo.o
 * make clean：會把名為 a.out 的執行檔給刪除
 
 
-## 📖 什麼是[markdown](https://gist.github.com/billy3321/1001749662c370887c63bb30f26c9e6e)??
-![](https://imgur.com/dKAwW7Y.jpg)
+## 📖 什麼是[Markdown](https://gist.github.com/billy3321/1001749662c370887c63bb30f26c9e6e)??
+![](Markdown.png)
 * Markdown 是一種輕量級標記式語言， 它有純文字標記的特性，讓編寫的可讀性提高，這是在以前很多電子郵件中就已經有的寫法，而目前也有很多網站都使用 Markdown 來撰寫說明文件或是在論壇上發表文章與發送訊息。常見網站例如：GitHub、wordpress、Slack、FB Messenger、IT 邦幫忙文章發表等等。
 
 
@@ -97,7 +97,7 @@ $@ : 屬於目標條件，也就是 foo.o
 * 直譯語言多半以動態語言為主，具有靈活的型別處理，動態生成與程式彈性，但速度會比編譯式語言要慢一些。
 
 ## 📖 GCC 開發環境
-#### 輸出 a.out
+### 輸出 a.out
 ```
 yichien@MSI MINGW64 /d/VScode/WP/ccc/109b/sp109b/sp/02-gcc/00-hello (master)
 $ gcc hello.c
@@ -106,7 +106,7 @@ yichien@MSI MINGW64 /d/VScode/WP/ccc/109b/sp109b/sp/02-gcc/00-hello (master)
 $ ./hello
 hello 雿末!
 ```
-#### 使用 -o 參數 
+### 使用 -o 參數 
 ##### 輸出檔案名稱為hello
 ```
 yichien@MSI MINGW64 /d/VScode/WP/ccc/109b/sp109b/sp/02-gcc/00-hello (master)
@@ -116,7 +116,7 @@ yichien@MSI MINGW64 /d/VScode/WP/ccc/109b/sp109b/sp/02-gcc/00-hello (master)
 $ ./hello
 hello 雿末!
 ```
-#### 編譯成執行檔 -- 輸出 a.out/a.exe
+### 編譯成執行檔 -- 輸出 a.out/a.exe
 ```
 yichien@MSI MINGW64 /d/VScode/WP/ccc/109b/sp109b/sp/02-gcc/01-basic (master)
 $ gcc sum.c
@@ -125,7 +125,7 @@ yichien@MSI MINGW64 /d/VScode/WP/ccc/109b/sp109b/sp/02-gcc/01-basic (master)
 $ ./a
 sum(10)=55
 ```
-#### 編譯成執行檔 -- 使用 -o 參數
+### 編譯成執行檔 -- 使用 -o 參數
 ```
 yichien@MSI MINGW64 /d/VScode/WP/ccc/109b/sp109b/sp/02-gcc/01-basic (master)
 $ gcc sum.c -o sum
@@ -134,7 +134,7 @@ yichien@MSI MINGW64 /d/VScode/WP/ccc/109b/sp109b/sp/02-gcc/01-basic (master)
 $ ./sum
 sum(10)=55
 ```
-#### 直接編譯連結
+### 直接編譯連結
 
 ```
 yichien@MSI MINGW64 /d/VScode/WP/ccc/109b/sp109b/sp/02-gcc/02-link (master)
@@ -145,7 +145,7 @@ $ ./run
 sum(10)=55
 ```
 
-#### 產生組合語言
+### 產生組合語言
 
 ```
 yichien@MSI MINGW64 /d/VScode/WP/ccc/109b/sp109b/sp/02-gcc/02-link (master)
@@ -155,7 +155,7 @@ yichien@MSI MINGW64 /d/VScode/WP/ccc/109b/sp109b/sp/02-gcc/02-link (master)
 $ gcc -S sum.c -o sum.s
 ```
 
-#### 組譯後連結
+### 組譯後連結
 
 ```
 yichien@MSI MINGW64 /d/VScode/WP/ccc/109b/sp109b/sp/02-gcc/02-link (master)
@@ -166,7 +166,7 @@ $ ./run
 sum(10)=55
 ```
 
-#### 產生目的檔
+### 產生目的檔
 
 ```
 yichien@MSI MINGW64 /d/VScode/WP/ccc/109b/sp109b/sp/02-gcc/02-link (master)
@@ -176,7 +176,7 @@ yichien@MSI MINGW64 /d/VScode/WP/ccc/109b/sp109b/sp/02-gcc/02-link (master)
 $ gcc -c main.c -o main.o
 ```
 
-#### 連結目的檔
+### 連結目的檔
 
 ```
 yichien@MSI MINGW64 /d/VScode/WP/ccc/109b/sp109b/sp/02-gcc/02-link (master)
