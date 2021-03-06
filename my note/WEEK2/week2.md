@@ -1,27 +1,24 @@
 # 📝系統程式第二週筆記20210303
-
-## 📖 編譯器 & 組譯器 & 虛擬機
+## 📖 系統程式四大重點
+* 編譯器(Complier)
+* 組譯器(Assembler)
+* 虛擬機(Virtual Machine)
+* 作業系統(Operating System)
+## 📖 編譯組譯流程圖
+![](main.jpg)
+## 📖 編譯器的工作流程
 ![](system.jpg)
  * 原始碼（source code）→ 預處理器（preprocessor）→ 編譯器（compiler）→ 組譯程式（assembler）→ 目的碼（object code）→ 連結器（linker）→ 執行檔（executables）   
-## 💻 編譯器(Compiler)
-* main.c → Compiler → main.s
-* 簡介:將人編寫、閱讀、維護的進階電腦語言所寫作的原始碼程式，翻譯為電腦能解讀、執行的低階機器語言的程式，也就是執行檔
-### 執行步驟:
+## 📖 編譯器的執行步驟:
 ![](compilerFlow.png)
 * STEP1 : 先進行文法處理(Syntax)
 * STEP2 : 詞彙解析(Lexer)，將字符序列轉換為標記序列的過程
 * STEP3 : 語法剖析器(Parser)，進行語法檢查、並構建由輸入的單詞組成的資料結構(語法樹)
 * STEP4 : 再來進行語意處理(Semantics Analysis)產生語意樹
 * STEP5 : 最佳化並產生Code Generation(IR檔 → ASM檔 → OBJ檔)
-## 💻 組譯器(Assembler)
-* main.s → Assembler → main.o/.exe(即機器語言)
-## 💻 虛擬機(Virtual Machine)
-* 簡介:電腦系統的仿真器，通過軟體類比具有完整硬體系統功能的、執行在一個完全隔離環境中的完整電腦系統，能提供物理電腦的功能 (EX:VirtualBox)
-## 💻 作業系統(Operating System)
 ## 📖 高階語言發展歷史年表
 ![](history.png)
-
-## 什麼是[BNF & EBNF](https://kknews.cc/zh-tw/news/3x3a59g.html)??
+## 📖 什麼是[BNF & EBNF](https://kknews.cc/zh-tw/news/3x3a59g.html)??
 ![](BNF.jpg)
 ### BNF：
 * 是一種用遞歸的思想來表述計算機語言符號集的定義規範，又稱巴科斯範式(Backus-Naur form)
@@ -32,8 +29,8 @@
 方括號[ ] | 內包含的為可選項
 大括號{ } | 內包含的為可重複0至無數次的項
 豎線 | 表示在其左右兩邊任選一項，相當於"OR"的意思
-::= | 是「被定義為」的意思。
-引號 | 裡面的內容代表其本身。
+::= | 是「被定義為」的意思
+引號 | 裡面的內容代表其本身
 
 ### EBNF：
 * 又稱擴展的巴科斯範式EBNF，用來排除了BNF的缺陷
@@ -41,12 +38,12 @@
 符號 | 內容
 -----|--------
 問號 | 意思是操作符左邊的符號（或括號中的一組符號）是可選項（可以出現0到多次）
-星號 | 是指可以重複多次。
-加號 | 是指可以出現多次。
+星號 | 是指可以重複多次
+加號 | 是指可以出現多次
 
-##  程式實際操作
-#### genExp.c(運算式生成)
-##### The result of execution
+## 💻 程式實際操作
+### genExp.c(運算式生成)
+#### The result of execution
 ```
 yichien@MSI MINGW64 /d/VScode/WP/ccc/109b/sp109b/sp/03-compiler/00-gen (master)
 $ gcc genExp.c rlib.c -o genExp
@@ -64,8 +61,8 @@ $ ./genExp
 7
 5
 ```
-#### genEnglish.c(英語生成)
-##### The result of execution
+### genEnglish.c(英語生成)
+#### The result of execution
 ```
 yichien@MSI MINGW64 /d/VScode/WP/ccc/109b/sp109b/sp/03-compiler/00-gen (master)
 $ gcc genEnglish.c rlib.c -o genEnglish
@@ -78,8 +75,8 @@ yichien@MSI MINGW64 /d/VScode/WP/ccc/109b/sp109b/sp/03-compiler/00-gen (master)
 $ ./genEnglish
 the cat eat the cat
 ```
-#### exp0.c(編譯成中間碼)
-##### Code
+### exp0.c(編譯成中間碼)
+#### Code
 ```
 #include <stdio.h>
 #include <assert.h>
@@ -169,7 +166,7 @@ int main(int argc, char * argv[]) {
 }
 
 ```
-##### The result of execution
+#### The result of execution
 ```
 yichien@MSI MINGW64 /d/VScode/WP/ccc/109b/sp109b/sp/03-compiler/01-exp0 (master)
 $ gcc exp0.c -o exp0
@@ -186,11 +183,10 @@ t1=5
 t2=t0+t1
 
 ```
-##### 補充
-* argc : 輸入數量
-* argv : 輸入位置
-#### exp0hack.c(編譯後產生 hack CPU 的組合語言)
-##### The result of execution
+#### 補充 : 遞迴下降法(Recursive Descent Parsing）
+* 其輸入的token，從左邊(Left)逐一讀進去分析（LL 的第一個 L），然後從左邊逐一解析出正確的構造樹是什麼（LL 的第二個 L），所以叫做LL分析器
+### exp0hack.c(編譯後產生 hack CPU的組合語言)
+#### The result of execution
 ```
 yichien@MSI MINGW64 /d/VScode/WP/ccc/109b/sp109b/sp/03-compiler/01-exp0 (master)
 $ gcc exp0hack.c -o exp0hack
@@ -233,8 +229,8 @@ M=
 ```
 
 
-#### exp0var.c(支援變數)
-##### The result of execution
+### exp0var.c(支援變數)
+#### The result of execution
 ```
 yichien@MSI MINGW64 /d/VScode/WP/ccc/109b/sp109b/sp/03-compiler/01-exp0 (master)
 $ gcc exp0var.c -o exp0var
@@ -276,3 +272,6 @@ D=D-M
 M=D
 
 ```
+
+
+🖊️editor : yi-chien Liu
