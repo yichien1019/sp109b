@@ -17,21 +17,10 @@ w+ | 清空檔案內容，新寫入的東西可在讀出(檔案可不存在，�
 a+ | 資料附加到舊檔案後面(游標指在EOF)，可讀取資料
 b | 二進位模式
 rw+ | 可讀取可寫入 若已存在就直接寫入 沒有就開新的檔案
+## 📖 指標
+![](指標.JPG)
 
-```
-//參考while寫出
-void IF(){
-  int ifBigin = nextLabel();
-  int ifEnd = nextLabel();
-  emit("(L%d)\n",ifBigin);
-  skip("if");
-  skip("(");
-  int e = E();
-  emit("if not T%d goto L%d\n", e, ifEnd);
-  skip(")");
-  emit("(L%d)\n", ifEnd);
-}
-```
+
 ## 💻 程式實際操作
 ### Lexer(詞彙解析) 
 #### Code(加註解)
