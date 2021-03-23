@@ -28,8 +28,17 @@ ubuntu@primary:~/sp/09-linux/02-asm/01-hello$ ./helloMacro
 Hello, world
 ```
 
+### hola > hola.s
+![](hola.JPG)
+``-no-pie 代表 no position independent executable就是不要編成與位址無關的目的檔``
+#### The result of execution
+```
+ubuntu@primary:~/sp/09-linux/02-asm/02-hola$ gcc -no-pie hola.s -o hola
+ubuntu@primary:~/sp/09-linux/02-asm/02-hola$ ./hola
+Hola, mundo
+```
 
 ## 📖 補充資料
 * [LLVM](https://zh.wikipedia.org/wiki/LLVM)
-
+* [GNU Assembler Examples](https://cs.lmu.edu/~ray/notes/gasexamples/?fbclid=IwAR3bWaJvlBeUDCldDf2B-y2eQoxZH11Q0UUwJP1IM-lGKzP-bxznPgmk8j4)
        
