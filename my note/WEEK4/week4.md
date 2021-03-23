@@ -4,7 +4,7 @@
 ### 操作步驟
 > 1.安裝multipass<br>
 > 2.確認multipass可以執行,並在裡面安裝gcc   ``sudo apt install gcc``<br>
-> 3.把老師的gitlab抓進來   ``git clone https://gitlab.com/ccc109/sp/``<br>
+> 3.clone老師的gitlab    ``git clone https://gitlab.com/ccc109/sp/``<br>
 > 4.cd到要執行的資料夾即可執行
 
 ## 💻 程式實際操作
