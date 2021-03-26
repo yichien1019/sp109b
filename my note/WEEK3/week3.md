@@ -178,3 +178,5 @@ token=}
 * [RISC-V](https://zh.wikipedia.org/wiki/RISC-V)
 * [QEMU](https://www.qemu.org/)
 * [GCC disable warning](https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html)
+
+🖊️editor : yi-chien Liu

@@ -8,8 +8,9 @@
 > 4.cd到要執行的資料夾即可執行
 
 ## 💻 程式實際操作
-### hello > hello.s 
+### 09-linux/02-asm/01-hello/hello
 ![](hello.JPG)
+``ld是連結器``
 #### The result of execution
 ```
 ubuntu@primary:~/sp/09-linux/02-asm/01-hello$ gcc -c hello.s
@@ -18,7 +19,7 @@ ubuntu@primary:~/sp/09-linux/02-asm/01-hello$ ./hello
 Hello, world
 ```
 
-### hello > helloMacro.s
+### 09-linux/02-asm/01-hello/helloMacro
 ![](helloMacro.JPG)
 #### The result of execution
 ```
@@ -42,3 +43,4 @@ Hola, mundo
 * [LLVM](https://zh.wikipedia.org/wiki/LLVM)
 * [GNU Assembler Examples](https://cs.lmu.edu/~ray/notes/gasexamples/?fbclid=IwAR3bWaJvlBeUDCldDf2B-y2eQoxZH11Q0UUwJP1IM-lGKzP-bxznPgmk8j4)
        
+🖊️editor : yi-chien Liu
