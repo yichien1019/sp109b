@@ -21,7 +21,7 @@ rw+ | 可讀取可寫入 若已存在就直接寫入 沒有就開新的檔案
 ![](指標.JPG)
 
 ## 💻 程式實際操作
-### Lexer(詞彙解析) 
+### 🔗 Lexer(詞彙解析) 
 #### Code(加註解)
 [lexer.c](./lexer.c)
 ```
@@ -179,4 +179,5 @@ token=}
 * [QEMU](https://www.qemu.org/)
 * [GCC disable warning](https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html)
 
-🖊️editor : yi-chien Liu
+
+🖊️ editor : yi-chien Liu

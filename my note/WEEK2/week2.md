@@ -20,7 +20,7 @@
 ![](history.png)
 ## 📖 什麼是[BNF & EBNF](https://kknews.cc/zh-tw/news/3x3a59g.html)??
 ![](BNF.jpg)
-### BNF：
+### 🔖BNF：
 * 是一種用遞歸的思想來表述計算機語言符號集的定義規範，又稱巴科斯範式(Backus-Naur form)
 
 符號 | 內容
@@ -32,7 +32,7 @@
 ::= | 是「被定義為」的意思
 引號 | 裡面的內容代表其本身
 
-### EBNF：
+### 🔖EBNF：
 * 又稱擴展的巴科斯範式EBNF，用來排除了BNF的缺陷
 
 符號 | 內容
@@ -42,7 +42,7 @@
 加號 | 是指可以出現多次
 
 ## 💻 程式實際操作
-### genExp.c(運算式生成)
+### 🔗 genExp.c(運算式生成)
 #### The result of execution
 ```
 yichien@MSI MINGW64 /d/VScode/WP/ccc/109b/sp109b/sp/03-compiler/00-gen (master)
@@ -61,7 +61,7 @@ $ ./genExp
 7
 5
 ```
-### genEnglish.c(英語生成)
+### 🔗 genEnglish.c(英語生成)
 #### The result of execution
 ```
 yichien@MSI MINGW64 /d/VScode/WP/ccc/109b/sp109b/sp/03-compiler/00-gen (master)
@@ -75,7 +75,7 @@ yichien@MSI MINGW64 /d/VScode/WP/ccc/109b/sp109b/sp/03-compiler/00-gen (master)
 $ ./genEnglish
 the cat eat the cat
 ```
-### exp0.c(編譯成中間碼)
+### 🔗 exp0.c(編譯成中間碼)
 #### Code
 ```
 #include <stdio.h>
@@ -185,7 +185,7 @@ t2=t0+t1
 ```
 #### 補充 : 遞迴下降法(Recursive Descent Parsing）
 * 其輸入的token，從左邊(Left)逐一讀進去分析（LL 的第一個 L），然後從左邊逐一解析出正確的構造樹是什麼（LL 的第二個 L），所以叫做LL分析器
-### exp0hack.c(編譯後產生 hack CPU的組合語言)
+### 🔗 exp0hack.c(編譯後產生 hack CPU的組合語言)
 #### The result of execution
 ```
 yichien@MSI MINGW64 /d/VScode/WP/ccc/109b/sp109b/sp/03-compiler/01-exp0 (master)
@@ -229,7 +229,7 @@ M=
 ```
 
 
-### exp0var.c(支援變數)
+### 🔗 exp0var.c(支援變數)
 #### The result of execution
 ```
 yichien@MSI MINGW64 /d/VScode/WP/ccc/109b/sp109b/sp/03-compiler/01-exp0 (master)
@@ -274,4 +274,4 @@ M=D
 ```
 
 
-🖊️editor : yi-chien Liu
+🖊️ editor : yi-chien Liu
