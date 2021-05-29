@@ -28,22 +28,22 @@ Error: yyy
 ![](blocking1 .JPG)
 #### The result of execution
 ```
-root@user-myubuntu:/home/user/sp/08-posix/07-nonblocking# gcc blocking1.c -o blocking1
-root@user-myubuntu:/home/user/sp/08-posix/07-nonblocking# ./blocking1 
+user@user-myubuntu:~/sp/08-posix/07-nonblocking$ gcc blocking1.c -o blocking1
+user@user-myubuntu:~/sp/08-posix/07-nonblocking$ ./blocking1 
 1
 buf is 1
 
 test
-2
-buf is 2
+123
+buf is 123
 ```
 
 ### 🔗 08-posix/07-nonblocking/nonblocking1 
 ![](nonblocking1.JPG)
 #### The result of execution
 ```
-root@user-myubuntu:/home/user/sp/08-posix/07-nonblocking# gcc nonblocking1.c -o nonblocking1
-root@user-myubuntu:/home/user/sp/08-posix/07-nonblocking# ./nonblocking1 
+user@user-myubuntu:~/sp/08-posix/07-nonblocking$ gcc nonblocking1.c -o nonblocking1
+user@user-myubuntu:~/sp/08-posix/07-nonblocking$ ./nonblocking1 
 read /dev/tty: Resource temporarily unavailable
 no input,buf is null
 ```
@@ -52,36 +52,35 @@ no input,buf is null
 ![](time.JPG)
 #### The result of execution
 ```
-root@user-myubuntu:/home/user/sp/08-posix/06-net/00-time# gcc time.c -o time
-root@user-myubuntu:/home/user/sp/08-posix/06-net/00-time# ./time
-Wed May 19 14:54:10 2021
-Wed May 19 14:54:11 2021
-Wed May 19 14:54:12 2021
+user@user-myubuntu:~/sp/08-posix/06-net/00-time$ gcc time.c -o time
+user@user-myubuntu:~/sp/08-posix/06-net/00-time$ ./time
+Fri May 21 14:17:05 2021
+Fri May 21 14:17:06 2021
 ```
 
 ### 🔗 sp/08-posix/06-net/01-timeTcp1/client
 ![](serverclient1.JPG)
 #### The result of execution
 ```
-root@user-myubuntu:/home/user/sp/08-posix/06-net/01-timeTcp1# make
+user@user-myubuntu:~/sp/08-posix/06-net/01-timeTcp1$ make
 gcc -std=c99 -O0 server.c -o server
 gcc -std=c99 -O0 client.c -o client
-root@user-myubuntu:/home/user/sp/08-posix/06-net/01-timeTcp1# ./server&
-[1] 15755
-root@user-myubuntu:/home/user/sp/08-posix/06-net/01-timeTcp1# ./client
-Wed May 19 15:02:50 2021
+user@user-myubuntu:~/sp/08-posix/06-net/01-timeTcp1$ ./server&
+[2] 2453
+user@user-myubuntu:~/sp/08-posix/06-net/01-timeTcp1$ ./client
+Fri May 21 14:18:13 2021
 ```
 
 ### 🔗 08-posix/06-net/03-telnet1/client
 ![](serverclient2.JPG)
 #### The result of execution
 ```
-root@user-myubuntu:/home/user/sp/08-posix/06-net/03-telnet1# make
+user@user-myubuntu:~/sp/08-posix/06-net/03-telnet1$ make
 gcc -Wall -std=gnu99 server.c ../net.c -o server
 gcc -Wall -std=gnu99 client.c ../net.c -o client
-root@user-myubuntu:/home/user/sp/08-posix/06-net/03-telnet1# ./server&
-[1] 15948
-root@user-myubuntu:/home/user/sp/08-posix/06-net/03-telnet1# ./client
+user@user-myubuntu:~/sp/08-posix/06-net/03-telnet1$ ./server&
+[1] 2546
+user@user-myubuntu:~/sp/08-posix/06-net/03-telnet1$ ./client
 connect to server 127.0.0.1 success!
 127.0.0.1 $ ls
 cmd=ls
