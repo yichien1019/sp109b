@@ -66,6 +66,3 @@ Switch=false
 🖊️editor : yi-chien Liu
 
 
-
-
-https://www.facebook.com/groups/ccccourse/permalink/571244643845851
