@@ -1,7 +1,7 @@
 # 📝系統程式第八週筆記20210421
 ## 📖 作業系統
 ### 🔖 常見作業系統
-![](作業系統圖.jpg)
+![](pic/作業系統圖.jpg)
 
 ### 🔖 五大功能模組
 #### 1.行程管理
@@ -26,7 +26,7 @@
 * 行程是一個“執行中的程序”。程序是一個有生命的實體，只有處理器賦予程序生命時，它才能成為一個活動的實體
 
 ### 🔖 行程記憶體結構
-![](行程記憶體結構.jpg)
+![](pic/行程記憶體結構.jpg)
 * 行程不只是程式碼 ，有時也稱為本文區(text section)。
 * 它包含代表目前運作的程式計數器 (program counter)數值和處理器(processor)的暫存器(registrers)內容。
 * 行程堆疊 (stack)：存放暫用資料 (副程式的參數、返回位址，及暫時性變數)
@@ -34,14 +34,14 @@
 * 堆積 (heap)：堆積就是在行程執行期間動態配置的記憶體。
 
 ### 🔖 行程狀態
-![](行程狀態圖.jpg)
+![](pic/行程狀態圖.jpg)
 行程的基本狀態有三種：就緒、執行、等待(阻塞)。
 * 就緒狀態：當行程已分配到除CPU以外的所有必要資源後，只要在獲得CPU，便可立即執行，行程這時的狀態稱為就緒狀態。處於該狀態的行程構成緒列隊。
 * 執行狀態：行程正在處理器上運行的狀態，該行程已獲得必要的資源，也獲得了處理器，用戶程序正在處理器上運行。
 * 等待(阻塞)狀態：正在執行的行程由於發生某事件而暫時無法繼續執行時，變放棄處理器而處於暫停狀態，即行程的執行收到阻塞，成為阻塞狀態，也成為等待狀態。
 
 ### 🔖 行程控制表
-![](行程控制表.jpg)
+![](pic/行程控制表.jpg)
 * 行程狀態(Process state)：running、waiting
 * 程式計數器(Program counter)：指出行程接著要執行的指令位址
 * CPU暫存器(CPU registers)：所有暫存器內容
@@ -58,14 +58,35 @@
 * DVM(Dalvik虛擬機器)是一種暫存器型態的虛擬機器。簡稱DVM，DVM在撰寫開發時就已經設想用最少的記憶體資源來執行，以及同時可執行多個VM為前提來開發的。
 
 ### 🔖 [JVM & DVM的差異](https://kknews.cc/zh-tw/tech/ql8yvo.html)
-![](dvm&jvm.png)
+![](pic/dvm&jvm.png)
 * 1.dvm執行的是.dex格式文件 jvm執行的是.class文件 android程序編譯完之後生產.class文件，然後，dex工具會把.class文件處理成.dex文件，然後把資源文件和.dex文件等打包成.apk文件。apk就是android package的意思。 jvm執行的是.class文件。
 * 2.dvm是基於寄存器的虛擬機 而jvm執行是基於虛擬棧的虛擬機。寄存器存取速度比棧快的多，dvm可以根據硬體實現最大的優化，比較適合移動設備。
 * 3..class文件存在很多的冗餘信息，dex工具會去除冗餘信息，並把所有的.class文件整合到.dex文件中。減少了I/O操作，提高了類的查找速度。
 
 ## 💻 程式實際操作
 ### 🔗 08-posix/01-basic/task
-![](task.JPG)
+![](pic/task.JPG)
+<details>
+  <summary><b>Show code</b></summary>
+
+  ```
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+int main(int argc, char *argv[])
+{
+    char *msg = argv[1];
+
+    for (int i=0; i<5; i++) {
+        printf("%d:%s\n", i, msg);
+        sleep(1);
+    }
+    return 0;
+}
+  ```
+</details>
+
 #### The result of execution
 ```
 user@user-myubuntu:~/sp/08-posix/01-basic$ gcc task.c -o task
@@ -84,7 +105,24 @@ user@user-myubuntu:~/sp/08-posix/01-basic$ ./task abc
 ```
 
 ### 🔗 08-posix/01-basic/vmem
-![](vmem.JPG)
+![](pic/vmem.JPG)
+<details>
+  <summary><b>Show code</b></summary>
+
+  ```
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char *argv[]) {
+    printf("location of code : %p\n", main);
+    printf("location of heap : %p\n", malloc(100e6));
+    int x = 3;
+    printf("location of stack: %p\n", &x);
+    return 0;
+}
+  ```
+</details>
+
 #### The result of execution
 ```
 user@user-myubuntu:~/sp/08-posix/01-basic$ gcc vmem.c -o vmem
@@ -95,7 +133,30 @@ location of stack: 0x7ffe37e684d4
 ```
 
 ### 🔗 08-posix/01-basic/mem
-![](mem.JPG)
+![](pic/mem.JPG)
+<details>
+  <summary><b>Show code</b></summary>
+
+  ```
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+int counter = 0;
+
+int main(int argc, char *argv[]) {
+    printf("(%d) addr of counter: %p\n", (int) getpid(), &counter);
+    for (int i=0; i<5; i++) {
+	    sleep(1);
+	    counter = counter + 1;
+	    printf("%d:(%d) value of counter: %d\n", i, getpid(), counter);
+    }
+    return 0;
+}
+  ```
+</details>
+
 #### The result of execution
 ```
 user@user-myubuntu:~/sp/08-posix/01-basic$ gcc mem.c -o mem
@@ -109,7 +170,32 @@ user@user-myubuntu:~/sp/08-posix/01-basic$ ./mem
 ```
 
 ### 🔗 08-posix/01-basic/mem0
-![](mem0.JPG)
+![](pic/mem0.JPG)
+<details>
+  <summary><b>Show code</b></summary>
+
+  ```
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+int counter;
+
+int main(int argc, char *argv[]) {
+    int *p = malloc(sizeof(int));
+    printf("(%d) addr pointed to by p: %p\n", (int) getpid(), p);
+    *p = 0;
+    for (int i=0; i<5; i++) {
+	    sleep(1);
+	    *p = *p + 1;
+	    printf("%d:(%d) value of p: %d\n", i, getpid(), *p);
+    }
+    return 0;
+}
+  ```
+</details>
+
 #### The result of execution
 ```
 user@user-myubuntu:~/sp/08-posix/01-basic$ gcc mem0.c -o mem0
@@ -123,7 +209,45 @@ user@user-myubuntu:~/sp/08-posix/01-basic$ ./mem0
 ```
 
 ### 🔗 08-posix/02-thread/georgeMary
-![](georgeMary.JPG)
+![](pic/georgeMary.JPG)
+<details>
+  <summary><b>Show code</b></summary>
+
+  ```
+#include <pthread.h>     // 引用 pthread 函式庫
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h> 
+
+void *print_george(void *argu) {    // 每隔一秒鐘印出一次 George 的函數
+  while (1) {    
+    printf("George\n");    
+    sleep(1);    
+  }    
+  return NULL;    
+}    
+
+void *print_mary(void *argu) {     // 每隔2秒鐘印出一次 Mary 的函數
+  while (1) {    
+    printf("Mary\n");    
+    sleep(2);    
+  }    
+  return NULL;    
+}    
+
+int main() {     // 主程式開始
+  pthread_t thread1, thread2;     // 宣告兩個執行緒
+  pthread_create(&thread1, NULL, &print_george, NULL);    // 執行緒 print_george
+  pthread_create(&thread2, NULL, &print_mary, NULL);    // 執行緒 print_mary
+  while (1) {     // 主程式每隔一秒鐘
+    printf("----------------\n");    // 就印出分隔行
+    sleep(1);     // 停止一秒鐘
+  }    
+  return 0;    
+}
+  ```
+</details>
+
 #### The result of execution
 ```
 user@user-myubuntu:~/sp/08-posix/02-thread$ gcc georgeMary.c -o georgeMary -lpthread

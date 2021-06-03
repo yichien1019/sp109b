@@ -2,7 +2,7 @@
 
 ## 💻 程式實際操作
 ### 🔗 08-posix/02-thread/producerConsumer 
-![](producerConsumer.jpg)
+![](pic/producerConsumer.jpg)
 #### The result of execution
 ```
 user@user-myubuntu:~/sp/08-posix/02-thread$ gcc producerConsumer.c -o producerConsumer -lpthread
@@ -18,7 +18,7 @@ incremented in!
 ```
 
 ### 🔗 08-posix/02-thread/philospher 
-![](philospher.jpg)
+![](pic/philospher.jpg)
 #### The result of execution
 ```
 user@user-myubuntu:~/sp/08-posix/02-thread$ gcc philospher.c -o philospher -lpthread
