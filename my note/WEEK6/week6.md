@@ -42,7 +42,8 @@ int sum(int n) {
 </details>
 
 #### The result of execution
-```user@user-myubuntu:~/sp/02-gcc/02-link$ gcc sum.c main.c -o sum
+```
+user@user-myubuntu:~/sp/02-gcc/02-link$ gcc sum.c main.c -o sum
 user@user-myubuntu:~/sp/02-gcc/02-link$ ./sum
 sum(10)=55
 ```

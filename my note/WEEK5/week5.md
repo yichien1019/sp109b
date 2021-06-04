@@ -3,14 +3,14 @@
 ### 🔖虛擬機 V.S. 模擬器
 * 模擬器 : 模擬電腦行為的軟體
 * 虛擬機 : 模擬處理器指令級的軟體
-![](虛擬機.jpg)
+![](pic/虛擬機.jpg)
 
 ### 🔖虛擬機架構
 * 記憶體機 : 可以直接對記憶體變數進行運算
 * 暫存器機 : 必須將變數載入暫存器中，才能進行運算
 * 堆疊機 : 取出堆疊上層元素進行運算，結果存回堆疊中
-![](虛擬機架構.jpg)
-![](虛擬機組合語言.jpg)
+![](pic/虛擬機架構.jpg)
+![](pic/虛擬機組合語言.jpg)
 
 ## 📖 [C4編譯器](https://hackmd.io/@srhuang/Bkk2eY5ES)的語法
 ### 🔖簡介
@@ -46,7 +46,7 @@
 
 ## 💻 程式實際操作
 ### 🔗 06-vm/01-jvm/HelloWorld
-![](HelloWorld.JPG)
+![](pic/HelloWorld.JPG)
 
 #### The result of execution
 ```
@@ -57,7 +57,7 @@ ubuntu@primary:~/sp/06-vm/01-jvm$ java HelloWorld
 Hello World!
 ```
 ### 🔗 06-vm/02-pitifulvm/src/tests/Factorial
-![](Factorial.JPG)
+![](pic/Factorial.JPG)
 
 #### The result of execution
 ```
@@ -69,7 +69,7 @@ ubuntu@primary:~/sp/06-vm/02-pitifulvm/src/tests$ java Factorial
 43954714
 ```
 ### 🔗 06-vm/02-pitifulvm/src/tests/Primes
-![](Primes.JPG)
+![](pic/Primes.JPG)
 #### The result of execution
 ```
 ubuntu@primary:~/sp/06-vm/02-pitifulvm/src$ make

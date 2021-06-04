@@ -109,7 +109,7 @@ int main() {
   char *arg[] = {"ls", "-l", NULL };
   printf("execvp():before\n");
   execvp(arg[0], arg);
-  printf("execvp():after\n");
+  printf("execvp():after\n"); //因為已經被替換所以不會執行
 }
   ```
 </details>
@@ -278,7 +278,23 @@ hello
   <summary><b>Show code</b></summary>
 
   ```
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#define SMAX 128
 
+int main() {
+  close(0);                      // 關閉標準輸入 stdin
+  close(1);                      // 關閉標準輸出 stdout
+  int a = open("a.txt", O_RDWR);         // 此時 open，會找沒被使用的最小檔案代號 0
+  int b = open("b.txt", O_CREAT|O_RDWR, 0644); // 此時 open，會找沒被使用的最小檔案代號 1
+  char line[SMAX];
+  gets(line);                    // 從 0 (a.txt) 讀入一行字 line
+  puts(line);                    // 輸出 line 到 1 (b.txt)
+  printf("a=%d, b=%d\n", a, b);
+}
   ```
 </details>
 
@@ -288,13 +304,36 @@ user@user-myubuntu:~/sp/08-posix/04-fs/02-fecho$ gcc fecho1.c -o fecho1
 user@user-myubuntu:~/sp/08-posix/04-fs/02-fecho$ ./fecho1
 ```
 
+#### 補充說明
+```
+0 - 標準輸入 stdin  (STDIN_FILENO)
+1 - 標準輸出 stdout (STDOUT_FILENO)
+2 - 標準錯誤 stderr (STDERR_FILENO)
+3 - 3 之後才是真正分配給檔案的
+```
+
 ### 🔗 08-posix/04-fs/01-fecho/fecho2
 ![](pic/fecho2.JPG)
 <details>
   <summary><b>Show code</b></summary>
 
   ```
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#define SMAX 128
 
+int main() {
+  int fda = open("a.txt", O_RDWR);          // 打開檔案 a.txt 並取得代號 fda
+  int fdb = open("b.txt", O_CREAT|O_RDWR, 0644);  // 打開檔案 b.txt 並取得代號 fdb
+  dup2(fda, 0);                             // 複製 fda 到 0 (stdin)
+  dup2(fdb, 1);                             // 複製 fdb 到 1 (stdout)
+  char line[SMAX];
+  gets(line);                               // 從 0 (a.txt) 讀入一行字 line
+  puts(line);                               // 輸出 line 到 1 (b.txt)
+}
   ```
 </details>
 
@@ -305,30 +344,66 @@ user@user-myubuntu:~/sp/08-posix/04-fs/02-fecho$ ./fecho2
 Hello, File descriptor !
 ```
 
-### 🔗 08-posix/05-myshell/v1/myshell 
+### 🔗 08-posix/05-myshell/v1/myshell1
 ![](pic/myshell1.JPG)
 <details>
   <summary><b>Show code</b></summary>
 
   ```
+#include "../myshell.h"
 
+int main(int argc, char *argv[]) {
+  char path[SMAX], cmd[SMAX];
+  getcwd(path, SMAX-1); // 取得初始路徑
+  while (1) { // 不斷等待使用者輸入命令並執行之
+    printf("myshell:%s $ ", path); // 顯示提示訊息
+    fgets(cmd, SMAX-1, stdin);     // 等待使用者輸入命令
+    system(cmd);                   // 執行命令
+  }
+}
   ```
 </details>
 
 #### The result of execution
 ```
-user@user-myubuntu:~/sp/08-posix/05-myshell/v1$ gcc myshell.c  -o myshell
+user@user-myubuntu:~/sp/08-posix/05-myshell/v1$ gcc myshell.c -o myshell
 user@user-myubuntu:~/sp/08-posix/05-myshell/v1$ ./myshell 
-myshell:/home/user/sp/08-posix/05-myshell/v1 $ 
+myshell:/home/user/sp/08-posix/05-myshell/v1 $ ls
+myshell  myshell.c  README.md
 ```
 
-### 🔗 08-posix/05-myshell/v2/myshell 
+### 🔗 08-posix/05-myshell/v2/myshell2
 ![](pic/myshell2.JPG)
 <details>
   <summary><b>Show code</b></summary>
 
   ```
+#include "../myshell.h"
 
+// 將檔案讀入成為字串
+int readText(char *file, char *text, int size) {
+  FILE *f = fopen(file, "r");
+  int n = fread(text, 1, size, f);
+  fclose(f);
+  return n;
+}
+
+int main(int argc, char *argv[]) {
+  char ipath[SMAX], path[SMAX], cmd[SMAX], fullcmd[SMAX], pathFile[SMAX];
+  getcwd(ipath, SMAX-1); // 取得初始路徑
+  strcpy(path, ipath);   // path = ipath
+  sprintf(pathFile, "%s/path.txt", ipath); // pathFile=<ipath>/path.txt
+  while (1) { // 不斷等待使用者輸入命令並執行之
+    printf("myshell:%s $ ", path); // 顯示提示訊息
+    fgets(cmd, SMAX-1, stdin);                     // 等待使用者輸入命令
+    strtok(cmd, "\n");             // 切掉 \n
+    if (strcmp(cmd, "exit")==0) break;
+    sprintf(fullcmd, "cd %s;%s;pwd>%s", path, cmd, pathFile); // fullcmd = 切到 path; 使用者輸入的命令; 將路徑存入 pathFile 中。
+    system(fullcmd);               // 執行 fullcmd 
+    readText(pathFile, path, SMAX);// 讀 pathFile 檔取得路徑
+    strtok(path, "\n");            // 切掉 \n
+  }
+}
   ```
 </details>
 
@@ -342,5 +417,3 @@ myshell:/home/user $ exit
 
 
 🖊️editor : yi-chien Liu
-
-https://www.facebook.com/ccckmit/videos/10158962564926893
