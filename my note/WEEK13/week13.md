@@ -5,7 +5,7 @@
 
 ## 💻 程式實際操作
 ### 🔗 08-posix/06-net/05-http/helloWebServer 
-![](helloWebServer.jpg)
+![](pic/helloWebServer.jpg)
 #### The result of execution
 ```
 user@user-myubuntu:~/sp/08-posix/06-net/05-http$ make
@@ -18,7 +18,7 @@ Server started at port: 8080
 1:got connection, client_fd=4
 ```
 #### The result of execution (補充)
-![](helloWebServercurl.JPG)
+![](pic/helloWebServercurl.JPG)
 ```
 user@user-myubuntu:~$ curl http://localhost:8080
 Hello World!
@@ -40,7 +40,7 @@ Hello World!
 * Connection #0 to host localhost left intact
 ```
 ### 🔗 08-posix/06-net/05-http/htmlServer  
-![](htmlServer.jpg)
+![](pic/htmlServer.jpg)
 #### The result of execution
 ```
 user@user-myubuntu:~/sp/08-posix/06-net/05-http$ ./htmlServer 
@@ -76,7 +76,7 @@ path contain .htm
 responseFile:fpath=./web/hello.html
 ```
 #### The result of execution (補充)
-![](htmlServercurl.JPG)
+![](pic/htmlServercurl.JPG)
 ```
 user@user-myubuntu:~$ curl http://localhost:8080
 curl: (52) Empty reply from server
