@@ -345,3 +345,8 @@ nice~~~~~
 
 
 🖊️editor : yi-chien Liu
+
+
+
+
+https://github.com/snaptoken/kilo-src/blob/prompt-escape/kilo.c
