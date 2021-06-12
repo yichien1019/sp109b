@@ -271,6 +271,7 @@ hello
 hello
 ```
 * `int n = read(0, line, SMAX);`  n 是指 read 讀到多少個 byte
+* read 不是標準函示庫，fread才是標準函示庫
 
 ### 🔗 08-posix/04-fs/01-fecho/fecho1
 ![](pic/fecho1.JPG)
