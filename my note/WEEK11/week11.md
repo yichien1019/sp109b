@@ -299,6 +299,7 @@ int main() {
   ```
 </details>
 
+* `get` 危險，會有緩衝區溢位的問題(大於SMAX時) 
 #### The result of execution
 ```
 user@user-myubuntu:~/sp/08-posix/04-fs/02-fecho$ gcc fecho1.c -o fecho1
@@ -415,6 +416,11 @@ user@user-myubuntu:~/sp/08-posix/05-myshell/v2$ ./myshell
 myshell:/home/user/sp/08-posix/05-myshell/v2 $ cd ~
 myshell:/home/user $ exit
 ```
+
+
+
+## 📖 補充資料
+* [緩衝區溢位](https://medium.com/@ktecv2000/%E7%B7%A9%E8%A1%9D%E5%8D%80%E6%BA%A2%E4%BD%8D%E6%94%BB%E6%93%8A%E4%B9%8B%E4%B8%80-buffer-overflow-83516aa80240)
 
 
 🖊️editor : yi-chien Liu
