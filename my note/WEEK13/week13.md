@@ -134,6 +134,41 @@ int main(int argc, char *argv[]) {
 }
   ```
 </details>
+<details>
+  <summary><b>Show httpd.c code</b></summary>
+
+  ```
+#include "httpd.h"
+
+void readHeader(int client_fd, char *header) {
+  int len = read(client_fd, header, TMAX);
+  header[len] = '\0';
+}
+
+void parseHeader(char *header, char *path) {
+  sscanf(header, "GET %s HTTP/", path);
+}
+
+void responseFile(int client_fd, char *path) {
+  char text[TMAX], response[TMAX], fpath[SMAX];
+  sprintf(fpath, "./web%s", path); // ex: fpath = ./web/hello.html
+  printf("responseFile:fpath=%s\n", fpath);
+  FILE *file = fopen(fpath, "r");
+  int len;
+  if (file == NULL) {
+    strcpy(text, "<html><body><h1>File not Found!</h1></body></html>");
+    len = strlen(text);
+  } else {
+    len = fread(text, 1, TMAX, file);
+    text[len] = '\0';
+  }
+  sprintf(response, "HTTP/1.1 200 OK\r\n"
+                    "Content-Type: text/html; charset=UTF-8\r\n"
+                    "Content-Length: %d\r\n\r\n%s", len, text);
+  write(client_fd, response, strlen(response));
+}
+  ```
+</details>
 
 #### The result of execution
 ```
@@ -220,13 +255,71 @@ responseFile:fpath=./web/index.html
 </body>
 * Connection #0 to host localhost left intact
 ```
-### 🔗 08-posix/06-net/05-http/
+### 🔗 08-posix/07-nonblocking/nonblocking1 
+![](pic/nonblocking1.jpg)
+<details>
+  <summary><b>Show code</b></summary>
+
+  ```
+#include<sys/types.h>
+#include<sys/stat.h>
+#include<fcntl.h>
+#include<unistd.h>
+#include<stdio.h>
+#include<stdlib.h>
+
+int main(int argc, char* argv[])
+{
+    int fd = open("/dev/tty", O_RDONLY | O_NONBLOCK); // O ﹣ Nonblock set file input and output to non blocking
+    if(fd == -1){
+        perror("open /dev/tty");
+        exit(1);
+    }
+    int ret = 0;
+    char buf[1024] = {0};
+    while(1){
+        ret = read(fd, buf, sizeof(buf));
+        if(ret == -1){
+            perror("read /dev/tty"); // fputs(stderr, "read /dev/tty")
+            printf("no input,buf is null\n");
+        }
+        else {
+            printf("ret = %d, buf is %s\n",ret, buf);
+        }
+        sleep(1);
+    }
+    close(fd);
+
+    return 0;
+}
+  ```
+</details>
+
+#### The result of execution
+```
+user@user:~/sp/08-posix/07-nonblocking$ gcc nonblocking1.c -o nonblocking1
+user@user:~/sp/08-posix/07-nonblocking$ ./nonblocking1 
+read /dev/tty: Resource temporarily unavailable
+no input,buf is null
+hread /dev/tty: Resource temporarily unavailable
+no input,buf is null
+elloread /dev/tty: Resource temporarily unavailable
+no input,buf is null
+
+ret = 6, buf is hello
+
+read /dev/tty: Resource temporarily unavailable
+no input,buf is null
+hello
+ret = 6, buf is hello
+```
+
+### 🔗 08-posix/06-net/05-http/ 
 ![](pic/.jpg)
 <details>
   <summary><b>Show code</b></summary>
 
   ```
-
   ```
 </details>
 
@@ -235,14 +328,19 @@ responseFile:fpath=./web/index.html
 
 ```
 
-
 ### 🔗 08-posix/06-net/05-http/ 
 ![](pic/.jpg)
 <details>
   <summary><b>Show code</b></summary>
 
   ```
+  ```
+</details>
 
+#### The result of execution
+```
+
+```
 🖊️editor : yi-chien Liu
 
 
