@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
     mkfifo(fifo0, 0666);  //權限
     mkfifo(fifo1, 0666);  //權限
 
-    char *me, *you;
+    char *me, *you;   //判別使用者
     if (strcmp(argv[1], "0")) { // me:0 => you:1
         me = fifo0;
         you = fifo1;
@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
         close(fd);
     } else {
         // parent: readline and send(一直讀鍵盤，然後把訊息送給對方)
-        fd = open(me, O_WRONLY); //開啟我方管道
+        fd = open(me, O_WRONLY);  //開啟我方管道
         while (1) {
             fgets(msg, SMAX, stdin); //讀一行輸出
             int n = write(fd, msg, strlen(msg)+1); //將該行輸入訊息送上我方管道
@@ -291,7 +291,6 @@ int main(int argc, char *argv[]) {
   ```
 </details>
 
-
 * 非連接導向
 
 #### The result of execution
@@ -318,13 +317,66 @@ i am client!
 receive: i am server!
 ```
 
-### 🔗 08-posix/08-ipc/05-udp/chat
+### 🔗 08-posix/08-ipc/06-tcp/chat
 ![](pic/udpchat.JPG)
 <details>
   <summary><b>Show code</b></summary>
 
   ```
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <netinet/in.h>
+#include <unistd.h>
 
+#define SMAX 80
+
+int main(int argc, char *argv[]) {
+    int sfd = socket(AF_INET, SOCK_STREAM, 0);
+    int cfd, fd;
+    struct sockaddr_in saddr, raddr;
+    memset(&saddr, 0, sizeof(saddr));
+    memset(&raddr, 0, sizeof(raddr));
+    saddr.sin_family = AF_INET;
+    saddr.sin_port = htons(8888);
+    char msg[SMAX];
+    if (argc==1) { // server
+        printf("I am server...\n");
+        saddr.sin_addr.s_addr = INADDR_ANY;
+        bind(sfd, (struct sockaddr*) &saddr, sizeof(struct sockaddr));
+        listen(sfd, 1);
+        socklen_t rAddrLen = sizeof(struct sockaddr);
+        cfd = accept(sfd, (struct sockaddr*) &raddr, &rAddrLen);
+        printf("accept: cfd=%d client addr %s\n", cfd, inet_ntoa(raddr.sin_addr));
+        fd = cfd;
+    } else { // client
+        printf("I am client...\n");
+        saddr.sin_addr.s_addr = inet_addr(argv[1]);
+        connect(sfd, (struct sockaddr*) &saddr, sizeof(struct sockaddr));
+        fd = sfd;
+        printf("connect success: sfd=%d server addr=%s\n", sfd, inet_ntoa(saddr.sin_addr));
+    }
+
+    if (fork() == 0) {
+        // child: receive message and print
+        while (1) {
+            int n = recv(fd, msg, SMAX, 0);
+            if (n <=0) break;
+            printf("receive: %s", msg);
+        }
+    } else {
+        // parent: readline and send msg
+        while (1) {
+            fgets(msg, SMAX, stdin);
+            send(fd, msg, strlen(msg)+1, 0);
+        }
+    }
+    close(sfd);
+    return 0;
+}
   ```
 </details>
 
@@ -358,3 +410,5 @@ receive: i am server!!!
 
 
 🖊️editor : yi-chien Liu
+
+https://www.facebook.com/groups/ccccourse/permalink/588578145445834
