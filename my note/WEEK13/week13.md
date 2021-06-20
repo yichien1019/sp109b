@@ -28,8 +28,8 @@ HTTP 的組成結構，分別是 HTTP Request 與 HTTP Response 這兩個大項�
 
 ## 💻 程式實際操作
 ### 🔗 08-posix/06-net/05-http/helloWebServer 
-![](pic/helloWebServer.jpg)
-![](pic/localhost8080.jpg)
+![](pic/helloWebServer.JPG)
+![](pic/localhost8080.JPG)
 <details>
   <summary><b>Show code</b></summary>
 
@@ -95,8 +95,9 @@ user@user-myubuntu:~$ curl -v http://localhost:8080
 Hello World!
 * Connection #0 to host localhost left intact
 ```
+
 ### 🔗 08-posix/06-net/05-http/htmlServer 
-![](pic/htmlServer.jpg)
+![](pic/htmlServer.JPG)
 <details>
   <summary><b>Show code</b></summary>
 
@@ -204,6 +205,7 @@ path=/hello.html
 path contain .htm
 responseFile:fpath=./web/hello.html
 ```
+
 #### The result of execution (補充)
 ![](pic/htmlServercurl.JPG)
 ```
@@ -255,8 +257,9 @@ responseFile:fpath=./web/index.html
 </body>
 * Connection #0 to host localhost left intact
 ```
+
 ### 🔗 08-posix/07-nonblocking/nonblocking1 
-![](pic/nonblocking1.jpg)
+![](pic/nonblocking1.JPG)
 <details>
   <summary><b>Show code</b></summary>
 
@@ -314,34 +317,344 @@ hello
 ret = 6, buf is hello
 ```
 
-### 🔗 08-posix/06-net/05-http/ 
-![](pic/.jpg)
+### 🔗 08-posix/A1-pipe/01-grep1/grep1
+![](pic/grep1.JPG)
 <details>
   <summary><b>Show code</b></summary>
 
   ```
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char *argv[]) {
+  char cmd[100];
+  sprintf(cmd, "grep %s", argv[1]);
+  system(cmd);
+}
   ```
 </details>
 
 #### The result of execution
 ```
-
+user@user:~/sp/08-posix/A1-pipe/01-grep1$ gcc grep1.c -o grep1
+user@user:~/sp/08-posix/A1-pipe/01-grep1$ ls -all
+總用量 36
+drwxrwxr-x 2 user user  4096  6月 19 15:17 .
+drwxrwxr-x 7 user user  4096  6月  9 13:41 ..
+-rwxrwxr-x 1 user user 16792  6月 19 15:17 grep1
+-rw-rw-r-- 1 user user   145  6月  9 13:41 grep1.c
+-rw-rw-r-- 1 user user   894  6月  9 13:41 README.md
+user@user:~/sp/08-posix/A1-pipe/01-grep1$ la -all | grep rwx
+drwxrwxr-x 2 user user  4096  6月 19 15:17 .
+drwxrwxr-x 7 user user  4096  6月  9 13:41 ..
+-rwxrwxr-x 1 user user 16792  6月 19 15:17 grep1
+user@user:~/sp/08-posix/A1-pipe/01-grep1$ la -all | ./grep1 rwx
+drwxrwxr-x 2 user user  4096  6月 19 15:17 .
+drwxrwxr-x 7 user user  4096  6月  9 13:41 ..
+-rwxrwxr-x 1 user user 16792  6月 19 15:17 grep1
 ```
 
-### 🔗 08-posix/06-net/05-http/ 
-![](pic/.jpg)
+### 🔗 08-posix/A1-pipe/02-popen/popen1
+![](pic/popen1.JPG)
 <details>
   <summary><b>Show code</b></summary>
 
   ```
+#include <stdio.h>
+
+int main() {
+  char buf[] = "aaa bbb ccc ddd eee fff ggg";
+  FILE *fp = popen("wc -w", "w");
+  fwrite(buf, sizeof(buf), 1, fp);
+  pclose(fp);
+}
   ```
 </details>
 
 #### The result of execution
 ```
-
+user@user:~/sp/08-posix/A1-pipe/02-popen$ gcc popen1.c -o popen1
+user@user:~/sp/08-posix/A1-pipe/02-popen$ wc README.md 
+ 14  20 174 README.md
+user@user:~/sp/08-posix/A1-pipe/02-popen$ wc -w README.md 
+20 README.md
+user@user:~/sp/08-posix/A1-pipe/02-popen$ wc -l README.md 
+14 README.md
+user@user:~/sp/08-posix/A1-pipe/02-popen$ wc -c README.md 
+174 README.md
+user@user:~/sp/08-posix/A1-pipe/02-popen$ ./popen1 
+7
 ```
+
+### 🔗 08-posix/A1-pipe/02-popen/popen2
+![](pic/.JPG)
+<details>
+  <summary><b>Show code</b></summary>
+
+  ```
+#include <stdio.h>
+
+int main() {
+  char buf[10000];
+  FILE *fp = popen("ls -all", "r");
+  int len = fread(buf, 1, sizeof(buf), fp);
+  buf[len] = '\0';
+  printf("%s", buf);
+  pclose(fp);
+}
+  ```
+</details>
+
+#### The result of execution
+```
+user@user:~/sp/08-posix/A1-pipe/02-popen$ gcc popen2.c -o popen2
+user@user:~/sp/08-posix/A1-pipe/02-popen$ ./popen2
+總用量 64
+drwxrwxr-x 3 user user  4096  6月 19 15:33 .
+drwxrwxr-x 7 user user  4096  6月  9 13:41 ..
+-rwxrwxr-x 1 user user 16840  6月 19 15:22 popen1
+-rw-rw-r-- 1 user user   164  6月  9 13:41 popen1.c
+-rwxrwxr-x 1 user user 16880  6月 19 15:33 popen2
+-rw-rw-r-- 1 user user   188  6月  9 13:41 popen2.c
+-rw-rw-r-- 1 user user   174  6月  9 13:41 README.md
+drwxrwxr-x 2 user user  4096  6月  9 13:41 upper
+```
+
+### 🔗 08-posix/A1-pipe/02-popen/upper/upperpipe
+![](pic/upperpipe.JPG)
+<details>
+  <summary><b>Show upperpipe.c code</b></summary>
+
+  ```
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+int main() {
+    char line[8192];
+    FILE *fpin;
+    fpin = popen("./upper", "r");
+    for ( ; ; ) {
+        fputs("prompt> ", stdout);
+        fflush(stdout);
+        fgets(line, sizeof(line), fpin); // 注意這行，line 會被 upper 轉為大寫
+        fputs(line, stdout);
+    }
+}
+  ```
+</details>
+<details>
+  <summary><b>Show upper.c code</b></summary>
+
+  ```
+#include <stdio.h>
+#include <ctype.h>
+
+int main() {
+    int c;
+    while ((c = getchar()) != EOF) {
+        if (islower(c)) c=toupper(c);
+        if (putchar(c) == EOF) printf("output error!");
+        if (c=='\n') fflush(stdout);
+    }
+}
+  ```
+</details>
+
+#### The result of execution
+```
+user@user:~/sp/08-posix/A1-pipe/02-popen/upper$ gcc upper.c -o upper
+user@user:~/sp/08-posix/A1-pipe/02-popen/upper$ gcc upperpipe.c -o upperpipe
+user@user:~/sp/08-posix/A1-pipe/02-popen/upper$ ./upperpipe 
+prompt> abcde
+ABCDE
+prompt> yichien
+YICHIEN
+```
+
+### 🔗 08-posix/A1-pipe/03-pipe/pipe1 
+![](pic/pipe1.JPG)
+<details>
+  <summary><b>Show code</b></summary>
+
+  ```
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+
+int main(int argc, char *argv[]) {
+    int pipefd[2];
+    pid_t cpid;
+    char buf;
+
+    if (argc != 2) {
+        fprintf(stderr, "Usage: %s <string>\n", argv[0]);
+        exit(EXIT_FAILURE);
+    }
+
+    if (pipe(pipefd) == -1) {
+        perror("pipe");
+        exit(EXIT_FAILURE);
+    }
+
+    cpid = fork();
+    if (cpid == -1) {
+        perror("fork");
+        exit(EXIT_FAILURE);
+    }
+
+    if (cpid == 0) {    /* Child reads from pipe */
+        close(pipefd[1]);          /* Close unused write end */
+
+        write(STDOUT_FILENO, "child: ", strlen("child: "));
+        while (read(pipefd[0], &buf, 1) > 0)
+            write(STDOUT_FILENO, &buf, 1);
+
+        write(STDOUT_FILENO, "\n", 1);
+        close(pipefd[0]);
+        _exit(EXIT_SUCCESS);
+
+    } else {            /* Parent writes argv[1] to pipe */
+        close(pipefd[0]);          /* Close unused read end */
+        write(pipefd[1], argv[1], strlen(argv[1]));
+        close(pipefd[1]);          /* Reader will see EOF */
+        wait(NULL);                /* Wait for child */
+        exit(EXIT_SUCCESS);
+    }
+}
+  ```
+</details>
+
+#### The result of execution
+```
+user@user:~/sp/08-posix/A1-pipe/03-pipe$ gcc pipe1.c -o pipe1
+user@user:~/sp/08-posix/A1-pipe/03-pipe$ ./pipe1 
+Usage: ./pipe1 <string>
+user@user:~/sp/08-posix/A1-pipe/03-pipe$ ./pipe1 yichien
+child: yichien
+```
+
+### 🔗 08-posix/A1-pipe/04-fifo/02-chat/fifo1 fifo2
+![](pic/fifo.JPC)
+<details>
+  <summary><b>Show fifo1.c code</b></summary>
+
+  ```
+#include <stdio.h>
+#include <string.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
+  
+int main()
+{
+    int fd;
+  
+    // FIFO file path
+    char * myfifo = "/tmp/myfifo";
+  
+    // Creating the named file(FIFO)
+    // mkfifo(<pathname>, <permission>)
+    mkfifo(myfifo, 0666);
+  
+    char arr1[80], arr2[80];
+    while (1)
+    {
+        // Open FIFO for write only
+        fd = open(myfifo, O_WRONLY);
+  
+        // Take an input arr2ing from user.
+        // 80 is maximum length
+        fgets(arr2, 80, stdin);
+  
+        // Write the input arr2ing on FIFO
+        // and close it
+        write(fd, arr2, strlen(arr2)+1);
+        close(fd);
+  
+        // Open FIFO for Read only
+        fd = open(myfifo, O_RDONLY);
+  
+        // Read from FIFO
+        read(fd, arr1, sizeof(arr1));
+  
+        // Print the read message
+        printf("User2: %s\n", arr1);
+        close(fd);
+    }
+    return 0;
+}
+  ```
+</details>
+<details>
+  <summary><b>Show fifo2.c code</b></summary>
+
+  ```
+// This side reads first, then reads
+#include <stdio.h>
+#include <string.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
+  
+int main()
+{
+    int fd1;
+  
+    // FIFO file path
+    char * myfifo = "/tmp/myfifo";
+  
+    // Creating the named file(FIFO)
+    // mkfifo(<pathname>,<permission>)
+    mkfifo(myfifo, 0666);
+  
+    char str1[80], str2[80];
+    while (1)
+    {
+        // First open in read only and read
+        fd1 = open(myfifo,O_RDONLY);
+        read(fd1, str1, 80);
+  
+        // Print the read string and close
+        printf("User1: %s\n", str1);
+        close(fd1);
+  
+        // Now open in write mode and write
+        // string taken from user.
+        fd1 = open(myfifo,O_WRONLY);
+        fgets(str2, 80, stdin);
+        write(fd1, str2, strlen(str2)+1);
+        close(fd1);
+    }
+    return 0;
+}
+  ```
+</details>
+
+#### The result of execution
+##### fifo1
+```
+user@user:~/sp/08-posix/A1-pipe/04-fifo/02-chat$ gcc fifo1.c -o fifo1
+user@user:~/sp/08-posix/A1-pipe/04-fifo/02-chat$ ./fifo1
+hello
+User2: hey yo 
+
+i am yc
+```
+##### fifo2
+```
+user@user:~/sp/08-posix/A1-pipe/04-fifo/02-chat$ gcc fifo2.c -o fifo2
+user@user:~/sp/08-posix/A1-pipe/04-fifo/02-chat$ ./fifo2
+User1: hello
+
+hey yo 
+User1: i am yc
+```
+
+
 🖊️editor : yi-chien Liu
-
-
-https://www.facebook.com/ccckmit/videos/10158997110611893
