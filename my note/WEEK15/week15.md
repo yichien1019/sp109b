@@ -1,4 +1,4 @@
-# 📝系統程式第十一週筆記20210609
+# 📝系統程式第十五週筆記20210609
 
 ## 💻 程式實際操作
 ### 🔗 09-linux/c/02-multiroom/02-multithread/server client
@@ -170,6 +170,25 @@ hi
 sky: how are you
 goooooooooooood
 ```
+
+### 🔗 09-linux/c/02-multiroom/04-epoll/server client
+![](pic/9c24serverclient.JPG)
+<details>
+  <summary><b>Show server.c code</b></summary>
+
+  ```
+  ```
+</detials>
+<summary><b>Show server.c code</b></summary>
+
+  ```
+  ```
+</detials>
+
+#### The result of execution
+```
+```
+
 
 ### 🔗 09-linux/c/02-multiroom/04-epoll/server client
 ![](pic/9c24serverclient.JPG)
