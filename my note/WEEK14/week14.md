@@ -410,5 +410,3 @@ receive: i am server!!!
 
 
 🖊️editor : yi-chien Liu
-
-https://www.facebook.com/groups/ccccourse/permalink/588578145445834

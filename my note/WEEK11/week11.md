@@ -84,6 +84,7 @@ int main() {
 </details>
 
 #### The result of execution
+![](pic/fork3ps.JPG)
 ```
 user@user-myubuntu:~/sp/08-posix/03-fork/01-hello$ gcc fork3.c -o fork3
 user@user-myubuntu:~/sp/08-posix/03-fork/01-hello$ ./fork3
