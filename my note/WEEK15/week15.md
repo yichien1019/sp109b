@@ -140,6 +140,8 @@ int main(int argc, char *argv[]) {
   ```
 </details>
 
+* 使用者輸入文字後，先傳給server，再廣播給其他使用者
+
 #### The result of execution
 ```
 user@user-myubuntu:~/sp/09-linux/c/02-multiroom/02-multithread$ gcc server.c -o server -lpthread
@@ -313,6 +315,9 @@ int main(int argc, char *argv[]) {
   ```
 </details>
 
+* 較有效率，不用創建很多個thread
+* 相較於 epoll，收訊事件這裡還是要一個一個測
+
 #### The result of execution
 ```
 user@user:~/sp/09-linux/c/02-multiroom/03-poll$ gcc server.c -o server -lpthread
@@ -484,6 +489,9 @@ int main(int argc, char *argv[]) {
 }
   ```
 </details>
+
+* 等待事件發生，測有事件發生的串流，而不需要全測
+* 效能比poll好，可以承受更多的客戶端
 
 #### The result of execution
 ```
