@@ -9,4 +9,5 @@ kilo2: kilo2.c
 	$(CC) -o kilo2 kilo2.c -Wall -W -pedantic -std=c99
 
 clean:
-	rm -f *.o *.exe
+	rm kilo
+	rm kilo2
