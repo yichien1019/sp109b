@@ -23,13 +23,13 @@
 /* Syntax highlight types */
 #define HL_NORMAL 0
 #define HL_NONPRINT 1
-#define HL_COMMENT 2   /* Single line comment. */
-#define HL_MLCOMMENT 3 /* Multi-line comment. */
+#define HL_COMMENT 2   //單行註解
+#define HL_MLCOMMENT 3 //多行註解
 #define HL_KEYWORD1 4
 #define HL_KEYWORD2 5
 #define HL_STRING 6
 #define HL_NUMBER 7
-#define HL_MATCH 8      /* Search match. */
+#define HL_MATCH 8      //搜索匹配
 
 #define HL_HIGHLIGHT_STRINGS (1<<0)
 #define HL_HIGHLIGHT_NUMBERS (1<<1)
@@ -43,16 +43,15 @@ struct editorSyntax {
     int flags;
 };
 
-/* This structure represents a single line of the file we are editing. */
+/* 這個結構代表我們正在編輯的文件的一行 */
 typedef struct erow {
-    int idx;            /* Row index in the file, zero-based. */
-    int size;           /* Size of the row, excluding the null term. */
-    int rsize;          /* Size of the rendered row. */
-    char *chars;        /* Row content. */
-    char *render;       /* Row content "rendered" for screen (for TABs). */
-    unsigned char *hl;  /* Syntax highlight type for each character in render.*/
-    int hl_oc;          /* Row had open comment at end in last syntax highlight
-                           check. */
+    int idx;            /* 文件中的行索引，從零開始 */
+    int size;           /* 行的大小，不包括空項 */
+    int rsize;          /* 渲染行的大小 */
+    char *chars;        /* 行的內容 */
+    char *render;       /* 為屏幕“呈現”的行內容（對於 TAB） */
+    unsigned char *hl;  /* 渲染中每個字符的語法重點類型*/
+    int hl_oc;          /* 行在最後一個語法突出顯示的末尾有開放註釋 查看 */
 } erow;
 
 typedef struct hlcolor {
@@ -60,19 +59,19 @@ typedef struct hlcolor {
 } hlcolor;
 
 struct editorConfig {
-    int cx,cy;  /* Cursor x and y position in characters */
-    int rowoff;     /* Offset of row displayed. */
-    int coloff;     /* Offset of column displayed. */
-    int screenrows; /* Number of rows that we can show */
-    int screencols; /* Number of cols that we can show */
-    int numrows;    /* Number of rows */
-    int rawmode;    /* Is terminal raw mode enabled? */
-    erow *row;      /* Rows */
-    int dirty;      /* File modified but not saved. */
-    char *filename; /* Currently open filename */
+    int cx,cy;      /* 游標在字符中的 x 和 y 位置 */
+    int rowoff;     /* 顯示行的偏移量 */
+    int coloff;     /* 顯示列的偏移量 */
+    int screenrows; /* 可以顯示的行數 */
+    int screencols; /* 可以顯示的列數 */
+    int numrows;    /* 行數 */
+    int rawmode;    /* 是否啟用終端原始模式 */
+    erow *row;      /* 行 */
+    int dirty;      /* 文件已修改但未保存 */
+    char *filename; /* 當前打開的文件名 * */
     char statusmsg[80];
     time_t statusmsg_time;
-    struct editorSyntax *syntax;    /* Current syntax highlight, or NULL. */
+    struct editorSyntax *syntax;    /* 當前語法突出顯示，或 NULL */
 };
 
 static struct editorConfig E;
@@ -149,8 +148,7 @@ char *C_HL_keywords[] = {
         "void|","short|","auto|","const|","bool|",NULL
 };
 
-/* Here we define an array of syntax highlights by extensions, keywords,
- * comments delimiters and flags. */
+/* 在這裡，我們通過擴展名、關鍵字，註釋分隔符和標誌 */
 struct editorSyntax HLDB[] = {
     {
         /* C / C++ */
@@ -165,46 +163,44 @@ struct editorSyntax HLDB[] = {
 
 /* ======================= Low level terminal handling ====================== */
 
-static struct termios orig_termios; /* In order to restore at exit.*/
+static struct termios orig_termios; /* 為了在退出時恢復*/
 
 void disableRawMode(int fd) {
-    /* Don't even check the return value as it's too late. */
+    /* 不要檢查返回值，因為為時已晚 */
     if (E.rawmode) {
         tcsetattr(fd,TCSAFLUSH,&orig_termios);
         E.rawmode = 0;
     }
 }
 
-/* Called at exit to avoid remaining in raw mode. */
+/* 在退出時調用以避免保持原始模式 */
 void editorAtExit(void) {
     disableRawMode(STDIN_FILENO);
 }
 
-/* Raw mode: 1960 magic shit. */
+/* 原始模式：1960 */
 int enableRawMode(int fd) {
     struct termios raw;
 
-    if (E.rawmode) return 0; /* Already enabled. */
+    if (E.rawmode) return 0;  /* 已啟用 */
     if (!isatty(STDIN_FILENO)) goto fatal;
     atexit(editorAtExit);
     if (tcgetattr(fd,&orig_termios) == -1) goto fatal;
 
-    raw = orig_termios;  /* modify the original mode */
-    /* input modes: no break, no CR to NL, no parity check, no strip char,
-     * no start/stop output control. */
+    raw = orig_termios;   /* 修改原始模式 */
+    /* 輸入模式：無中斷，無 CR 到 NL，無奇偶校驗，無帶字符， * 無啟動/停止輸出控制 */
     raw.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON);
-    /* output modes - disable post processing */
+    /* 輸出模式 - 禁用後期處理 */
     raw.c_oflag &= ~(OPOST);
-    /* control modes - set 8 bit chars */
+    /* 控制模式 - 設置 8 位字符 */
     raw.c_cflag |= (CS8);
-    /* local modes - choing off, canonical off, no extended functions,
-     * no signal chars (^Z,^C) */
+    /* 本地模式 - 選擇關閉，規範關閉，無擴展功能，無信號字符 (^Z,^C) */
     raw.c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG);
-    /* control chars - set return condition: min number of bytes and timer. */
-    raw.c_cc[VMIN] = 0; /* Return each byte, or zero for timeout. */
-    raw.c_cc[VTIME] = 1; /* 100 ms timeout (unit is tens of second). */
+    /* 控製字符 - 設置返回條件：最小字節數和計時器 */
+    raw.c_cc[VMIN] = 0; /* 返回每個字節，或超時為零 */
+    raw.c_cc[VTIME] = 1; /* 100 毫秒超時（單位為幾十秒） */
 
-    /* put terminal in raw mode after flushing */
+    /* 刷新後將終端置於原始模式 */
     if (tcsetattr(fd,TCSAFLUSH,&raw) < 0) goto fatal;
     E.rawmode = 1;
     return 0;
@@ -214,8 +210,8 @@ fatal:
     return -1;
 }
 
-/* Read a key from the terminal put in raw mode, trying to handle
- * escape sequences. */
+/* 從處於原始模式的終端讀取密鑰，嘗試處理
+ * 轉義序列 */
 int editorReadKey(int fd) {
     int nread;
     char c, seq[3];
@@ -224,15 +220,15 @@ int editorReadKey(int fd) {
 
     while(1) {
         switch(c) {
-        case ESC:    /* escape sequence */
-            /* If this is just an ESC, we'll timeout here. */
+        case ESC:    /* 轉義序列 */
+            /* 如果這只是一個ESC，我們會在這裡超時 */
             if (read(fd,seq,1) == 0) return ESC;
             if (read(fd,seq+1,1) == 0) return ESC;
 
-            /* ESC [ sequences. */
+            /* ESC [ 序列 */
             if (seq[0] == '[') {
                 if (seq[1] >= '0' && seq[1] <= '9') {
-                    /* Extended escape, read additional byte. */
+                    /* 擴展轉義，讀取附加字節 */
                     if (read(fd,seq+2,1) == 0) return ESC;
                     if (seq[2] == '~') {
                         switch(seq[1]) {
@@ -253,7 +249,7 @@ int editorReadKey(int fd) {
                 }
             }
 
-            /* ESC O sequences. */
+            /* ESC O 序列 */
             else if (seq[0] == 'O') {
                 switch(seq[1]) {
                 case 'H': return HOME_KEY;
@@ -274,10 +270,10 @@ int getCursorPosition(int ifd, int ofd, int *rows, int *cols) {
     char buf[32];
     unsigned int i = 0;
 
-    /* Report cursor location */
+    /* 報告鼠標位置 */
     if (write(ofd, "\x1b[6n", 4) != 4) return -1;
 
-    /* Read the response: ESC [ rows ; cols R */
+    /* 閱讀響應：ESC [ 行 ; 列R*/
     while (i < sizeof(buf)-1) {
         if (read(ifd,buf+i,1) != 1) break;
         if (buf[i] == 'R') break;
@@ -285,7 +281,7 @@ int getCursorPosition(int ifd, int ofd, int *rows, int *cols) {
     }
     buf[i] = '\0';
 
-    /* Parse it. */
+    /* 解析一下 */
     if (buf[0] != ESC || buf[1] != '[') return -1;
     if (sscanf(buf+2,"%d;%d",rows,cols) != 2) return -1;
     return 0;
@@ -298,23 +294,23 @@ int getWindowSize(int ifd, int ofd, int *rows, int *cols) {
     struct winsize ws;
 
     if (ioctl(1, TIOCGWINSZ, &ws) == -1 || ws.ws_col == 0) {
-        /* ioctl() failed. Try to query the terminal itself. */
+        /* ioctl() 失敗。嘗試查詢終端本身 */
         int orig_row, orig_col, retval;
 
-        /* Get the initial position so we can restore it later. */
+        /* 獲取初始位置以便我們稍後恢復它 */
         retval = getCursorPosition(ifd,ofd,&orig_row,&orig_col);
         if (retval == -1) goto failed;
 
-        /* Go to right/bottom margin and get position. */
+        /* 轉到右/下邊距並獲得位置 */
         if (write(ofd,"\x1b[999C\x1b[999B",12) != 12) goto failed;
         retval = getCursorPosition(ifd,ofd,rows,cols);
         if (retval == -1) goto failed;
 
-        /* Restore position. */
+        /* 恢復位置 */
         char seq[32];
         snprintf(seq,32,"\x1b[%d;%dH",orig_row,orig_col);
         if (write(ofd,seq,strlen(seq)) == -1) {
-            /* Can't recover... */
+            /* 無法恢復 */
         }
         return 0;
     } else {
@@ -343,13 +339,13 @@ int editorRowHasOpenComment(erow *row) {
     return 0;
 }
 
-/* Set every byte of row->hl (that corresponds to every character in the line)
- * to the right syntax highlight type (HL_* defines). */
+/* 設置 row->hl 的每個字節（對應於行中的每個字符）
+ * 到右邊的語法重點類型(HL_* defines) */
 void editorUpdateSyntax(erow *row) {
     row->hl = realloc(row->hl,row->rsize);
     memset(row->hl,HL_NORMAL,row->rsize);
 
-    if (E.syntax == NULL) return; /* No syntax, everything is HL_NORMAL. */
+    if (E.syntax == NULL) return; /* 沒有語法，一切都是 HL_NORMAL */
 
     int i, prev_sep, in_string, in_comment;
     char *p;
@@ -358,31 +354,31 @@ void editorUpdateSyntax(erow *row) {
     char *mcs = E.syntax->multiline_comment_start;
     char *mce = E.syntax->multiline_comment_end;
 
-    /* Point to the first non-space char. */
+    /* 指向第一個非空格字符 */
     p = row->render;
-    i = 0; /* Current char offset */
+    i = 0;  /* 當前字符偏移 */
     while(*p && isspace(*p)) {
         p++;
         i++;
     }
-    prev_sep = 1; /* Tell the parser if 'i' points to start of word. */
-    in_string = 0; /* Are we inside "" or '' ? */
-    in_comment = 0; /* Are we inside multi-line comment? */
+    prev_sep = 1; /* 告訴解析器 'i' 是否指向單詞的開頭 */
+    in_string = 0; /* 在 " " 或 ' ' 裡面嗎？*/
+    in_comment = 0; /* 在多行註釋裡面嗎？ */
 
-    /* If the previous line has an open comment, this line starts
-     * with an open comment state. */
+    /* 如果前一行有打開的註釋，則此行開始
+     * 具有開放評論狀態 */
     if (row->idx > 0 && editorRowHasOpenComment(&E.row[row->idx-1]))
         in_comment = 1;
 
     while(*p) {
-        /* Handle // comments. */
+        /* 處理 // 註釋 */
         if (prev_sep && *p == scs[0] && *(p+1) == scs[1]) {
             /* From here to end is a comment */
             memset(row->hl+i,HL_COMMENT,row->size-i);
             return;
         }
 
-        /* Handle multi line comments. */
+        /* 處理多行註釋 */
         if (in_comment) {
             row->hl[i] = HL_MLCOMMENT;
             if (*p == mce[0] && *(p+1) == mce[1]) {
@@ -405,7 +401,7 @@ void editorUpdateSyntax(erow *row) {
             continue;
         }
 
-        /* Handle "" and '' */
+        /* 處理 " " 和 ' ' */
         if (in_string) {
             row->hl[i] = HL_STRING;
             if (*p == '\\') {
@@ -427,7 +423,7 @@ void editorUpdateSyntax(erow *row) {
             }
         }
 
-        /* Handle non printable chars. */
+        /* 處理不可打印的字符 */
         if (!isprint(*p)) {
             row->hl[i] = HL_NONPRINT;
             p++; i++;
@@ -435,7 +431,7 @@ void editorUpdateSyntax(erow *row) {
             continue;
         }
 
-        /* Handle numbers */
+        /* 處理數字 */
         if ((isdigit(*p) && (prev_sep || row->hl[i-1] == HL_NUMBER)) ||
             (*p == '.' && i >0 && row->hl[i-1] == HL_NUMBER)) {
             row->hl[i] = HL_NUMBER;
@@ -444,7 +440,7 @@ void editorUpdateSyntax(erow *row) {
             continue;
         }
 
-        /* Handle keywords and lib calls */
+        /* 處理關鍵字和 lib 調用 */
         if (prev_sep) {
             int j;
             for (j = 0; keywords[j]; j++) {
@@ -455,7 +451,7 @@ void editorUpdateSyntax(erow *row) {
                 if (!memcmp(p,keywords[j],klen) &&
                     is_separator(*(p+klen)))
                 {
-                    /* Keyword */
+                    /* 關鍵詞 */
                     memset(row->hl+i,kw2 ? HL_KEYWORD2 : HL_KEYWORD1,klen);
                     p += klen;
                     i += klen;
@@ -464,25 +460,25 @@ void editorUpdateSyntax(erow *row) {
             }
             if (keywords[j] != NULL) {
                 prev_sep = 0;
-                continue; /* We had a keyword match */
+                continue; /* 有一個關鍵字匹配 */
             }
         }
 
-        /* Not special chars */
+        /* 不是特殊字符 */
         prev_sep = is_separator(*p);
         p++; i++;
     }
 
-    /* Propagate syntax change to the next row if the open commen
-     * state changed. This may recursively affect all the following rows
-     * in the file. */
+    /* 如果打開評論，則將語法更改傳播到下一行
+     * 狀態改變了。這可能會遞歸地影響以下所有行
+     * 在文件中 */
     int oc = editorRowHasOpenComment(row);
     if (row->hl_oc != oc && row->idx+1 < E.numrows)
         editorUpdateSyntax(&E.row[row->idx+1]);
     row->hl_oc = oc;
 }
 
-/* Maps syntax highlight token types to terminal colors. */
+/* 將語法重點標記類型映射到終端顏色 */
 int editorSyntaxToColor(int hl) {
     switch(hl) {
     case HL_COMMENT:
@@ -496,8 +492,8 @@ int editorSyntaxToColor(int hl) {
     }
 }
 
-/* Select the syntax highlight scheme depending on the filename,
- * setting it in the global state E.syntax. */
+/* 根據文件名選擇語法重點方案
+ * 將其設置為全局狀態 E.syntax */
 void editorSelectSyntaxHighlight(char *filename) {
     for (unsigned int j = 0; j < HLDB_ENTRIES; j++) {
         struct editorSyntax *s = HLDB+j;
@@ -518,13 +514,13 @@ void editorSelectSyntaxHighlight(char *filename) {
 
 /* ======================= Editor rows implementation ======================= */
 
-/* Update the rendered version and the syntax highlight of a row. */
+/* 更新渲染版本和一行的語法重點 */
 void editorUpdateRow(erow *row) {
     unsigned int tabs = 0, nonprint = 0;
     int j, idx;
 
-   /* Create a version of the row we can directly print on the screen,
-     * respecting tabs, substituting non printable characters with '?'. */
+   /* 創建一個我們可以直接打印在屏幕上的行的版本
+     * 用“？”替換不可打印的字符 */
     free(row->render);
     for (j = 0; j < row->size; j++)
         if (row->chars[j] == TAB) tabs++;
@@ -549,12 +545,11 @@ void editorUpdateRow(erow *row) {
     row->rsize = idx;
     row->render[idx] = '\0';
 
-    /* Update the syntax highlighting attributes of the row. */
+    /* 更新行的語法重點屬性 */
     editorUpdateSyntax(row);
 }
 
-/* Insert a row at the specified position, shifting the other rows on the bottom
- * if required. */
+/* 如果需要的話，\在指定位置插入一行，在底部移動其他行*/
 void editorInsertRow(int at, char *s, size_t len) {
     if (at > E.numrows) return;
     E.row = realloc(E.row,sizeof(erow)*(E.numrows+1));
@@ -575,15 +570,14 @@ void editorInsertRow(int at, char *s, size_t len) {
     E.dirty++;
 }
 
-/* Free row's heap allocated stuff. */
+/* 空閒行的堆分配的東西 */
 void editorFreeRow(erow *row) {
     free(row->render);
     free(row->chars);
     free(row->hl);
 }
 
-/* Remove the row at the specified position, shifting the remainign on the
- * top. */
+/* 刪除指定位置的行，移動剩餘的頂部 */
 void editorDelRow(int at) {
     erow *row;
 
@@ -596,20 +590,18 @@ void editorDelRow(int at) {
     E.dirty++;
 }
 
-/* Turn the editor rows into a single heap-allocated string.
- * Returns the pointer to the heap-allocated string and populate the
- * integer pointed by 'buflen' with the size of the string, escluding
- * the final nulterm. */
+/* 將編輯器行轉換為單個堆分配字符串
+ * 返回指向堆分配字符串的指針並填充'buflen' 指向的帶有字符串大小的整數，包括最後的零項 */
 char *editorRowsToString(int *buflen) {
     char *buf = NULL, *p;
     int totlen = 0;
     int j;
 
-    /* Compute count of bytes */
+    /* 計算字節數 */
     for (j = 0; j < E.numrows; j++)
-        totlen += E.row[j].size+1; /* +1 is for "\n" at end of every row */
+        totlen += E.row[j].size+1; /* +1 表示每行末尾的“\n” */
     *buflen = totlen;
-    totlen++; /* Also make space for nulterm */
+    totlen++; /* 也為零項騰出空間 */
 
     p = buf = malloc(totlen);
     for (j = 0; j < E.numrows; j++) {
@@ -622,12 +614,10 @@ char *editorRowsToString(int *buflen) {
     return buf;
 }
 
-/* Insert a character at the specified position in a row, moving the remaining
- * chars on the right if needed. */
+/* 在一行中的指定位置插入一個字符，移動剩餘的。如果需要，使用右側的字符 */
 void editorRowInsertChar(erow *row, int at, int c) {
     if (at > row->size) {
-        /* Pad the string with spaces if the insert location is outside the
-         * current length by more than a single character. */
+        /* 如果插入位置在字符串之外，則用空格填充字符串。當前長度超過一個字符*/
         int padlen = at-row->size;
         /* In the next line +2 means: new char and null term. */
         row->chars = realloc(row->chars,row->size+padlen+2);
@@ -635,8 +625,7 @@ void editorRowInsertChar(erow *row, int at, int c) {
         row->chars[row->size+padlen+1] = '\0';
         row->size += padlen+1;
     } else {
-        /* If we are in the middle of the string just make space for 1 new
-         * char plus the (already existing) null term. */
+        /* 如果我們在字符串的中間，只需為 1 個新空間騰出空間。char 加上（已經存在的）空項 */
         row->chars = realloc(row->chars,row->size+2);
         memmove(row->chars+at+1,row->chars+at,row->size-at+1);
         row->size++;
@@ -646,7 +635,7 @@ void editorRowInsertChar(erow *row, int at, int c) {
     E.dirty++;
 }
 
-/* Append the string 's' at the end of a row */
+/* 在行的末尾附加字符串 's' */
 void editorRowAppendString(erow *row, char *s, size_t len) {
     row->chars = realloc(row->chars,row->size+len+1);
     memcpy(row->chars+row->size,s,len);
@@ -656,7 +645,7 @@ void editorRowAppendString(erow *row, char *s, size_t len) {
     E.dirty++;
 }
 
-/* Delete the character at offset 'at' from the specified row. */
+/* 從指定行中刪除偏移量 'at' 處的字符 */
 void editorRowDelChar(erow *row, int at) {
     if (row->size <= at) return;
     memmove(row->chars+at,row->chars+at+1,row->size-at);
@@ -665,14 +654,13 @@ void editorRowDelChar(erow *row, int at) {
     E.dirty++;
 }
 
-/* Insert the specified char at the current prompt position. */
+/* 在當前提示位置插入指定字符 */
 void editorInsertChar(int c) {
     int filerow = E.rowoff+E.cy;
     int filecol = E.coloff+E.cx;
     erow *row = (filerow >= E.numrows) ? NULL : &E.row[filerow];
 
-    /* If the row where the cursor is currently located does not exist in our
-     * logical representaion of the file, add enough empty rows as needed. */
+    /* 如果鼠標當前所在的行在我們的文件的邏輯表示，根據需要添加足夠的空行 */
     if (!row) {
         while(E.numrows <= filerow)
             editorInsertRow(E.numrows,"",0);
@@ -686,8 +674,7 @@ void editorInsertChar(int c) {
     E.dirty++;
 }
 
-/* Inserting a newline is slightly complex as we have to handle inserting a
- * newline in the middle of a line, splitting the line as needed. */
+/* 插入換行符有點複雜，因為我們必須處理插入一個，在一行中間換行，根據需要拆分該行 */
 void editorInsertNewline(void) {
     int filerow = E.rowoff+E.cy;
     int filecol = E.coloff+E.cx;
@@ -700,13 +687,12 @@ void editorInsertNewline(void) {
         }
         return;
     }
-    /* If the cursor is over the current line size, we want to conceptually
-     * think it's just over the last character. */
+    /* 如果光標在當前行大小上，我們想在概念上認為它剛剛超過最後一個字符 */
     if (filecol >= row->size) filecol = row->size;
     if (filecol == 0) {
         editorInsertRow(filerow,"",0);
     } else {
-        /* We are in the middle of a line. Split it between two rows. */
+        /* 當在一條線的中間。將其拆分為兩行 */
         editorInsertRow(filerow+1,row->chars+filecol,row->size-filecol);
         row = &E.row[filerow];
         row->chars[filecol] = '\0';
@@ -723,7 +709,7 @@ fixcursor:
     E.coloff = 0;
 }
 
-/* Delete the char at the current prompt position. */
+/* 刪除當前提示位置的字符 */
 void editorDelChar() {
     int filerow = E.rowoff+E.cy;
     int filecol = E.coloff+E.cx;
@@ -731,8 +717,7 @@ void editorDelChar() {
 
     if (!row || (filecol == 0 && filerow == 0)) return;
     if (filecol == 0) {
-        /* Handle the case of column 0, we need to move the current line
-         * on the right of the previous one. */
+        /* 處理第0列的情況，我們需要移動當前行(在上一個的右側) */
         filecol = E.row[filerow-1].size;
         editorRowAppendString(&E.row[filerow-1],row->chars,row->size);
         editorDelRow(filerow);
@@ -758,8 +743,7 @@ void editorDelChar() {
     E.dirty++;
 }
 
-/* Load the specified program in the editor memory and returns 0 on success
- * or 1 on error. */
+/* 在編輯器內存中加載指定​​的程序並在成功時返回 0 或 1 出錯 */
 int editorOpen(char *filename) {
     FILE *fp;
 
@@ -792,15 +776,14 @@ int editorOpen(char *filename) {
     return 0;
 }
 
-/* Save the current file on disk. Return 0 on success, 1 on error. */
+/* 將當前文件保存在磁盤上。成功返回 0，錯誤返回 1 */
 int editorSave(void) {
     int len;
     char *buf = editorRowsToString(&len);
     int fd = open(E.filename,O_RDWR|O_CREAT,0644);
     if (fd == -1) goto writeerr;
 
-    /* Use truncate + a single write(2) call in order to make saving
-     * a bit safer, under the limits of what we can do in a small editor. */
+    /* 使用 截短 + 單個 write(2) 調用以進行保存，在我們可以在小型編輯器中執行的操作的限制下，更安全一些 */
     if (ftruncate(fd,len) == -1) goto writeerr;
     if (write(fd,buf,len) != len) goto writeerr;
 
@@ -843,16 +826,16 @@ void abFree(struct abuf *ab) {
     free(ab->b);
 }
 
-/* This function writes the whole screen using VT100 escape characters
- * starting from the logical state of the editor in the global state 'E'. */
+/* 此函數使用 VT100 轉義字符寫入整個屏幕 
+ * 從編輯器在全局狀態 'E 的邏輯狀態開始 */
 void editorRefreshScreen(void) {
     int y;
     erow *r;
     char buf[32];
     struct abuf ab = ABUF_INIT;
 
-    abAppend(&ab,"\x1b[?25l",6); /* Hide cursor. */
-    abAppend(&ab,"\x1b[H",3); /* Go home. */
+    abAppend(&ab,"\x1b[?25l",6);  /* 隱藏光標 */
+    abAppend(&ab,"\x1b[H",3);  /* 回起始點 */
     for (y = 0; y < E.screenrows; y++) {
         int filerow = E.rowoff+y;
 
@@ -916,7 +899,7 @@ void editorRefreshScreen(void) {
         abAppend(&ab,"\r\n",2);
     }
 
-    /* Create a two rows status. First row: */
+    /* 創建兩行狀態。第一排: */
     abAppend(&ab,"\x1b[0K",4);
     abAppend(&ab,"\x1b[7m",4);
     char status[80], rstatus[80];
@@ -937,15 +920,15 @@ void editorRefreshScreen(void) {
     }
     abAppend(&ab,"\x1b[0m\r\n",6);
 
-    /* Second row depends on E.statusmsg and the status message update time. */
+    /* 第二行取決於 E.statusmsg 和狀態消息更新時間 */
     abAppend(&ab,"\x1b[0K",4);
     int msglen = strlen(E.statusmsg);
     if (msglen && time(NULL)-E.statusmsg_time < 5)
         abAppend(&ab,E.statusmsg,msglen <= E.screencols ? msglen : E.screencols);
 
-    /* Put cursor at its current position. Note that the horizontal position
-     * at which the cursor is displayed may be different compared to 'E.cx'
-     * because of TABs. */
+    /* 將光標放在當前位置。注意水平位置
+     * 與“E.cx”相比，顯示光標的位置可能不同
+     * 因為 TAB */
     int j;
     int cx = 1;
     int filerow = E.rowoff+E.cy;
@@ -958,13 +941,12 @@ void editorRefreshScreen(void) {
     }
     snprintf(buf,sizeof(buf),"\x1b[%d;%dH",E.cy+1,cx);
     abAppend(&ab,buf,strlen(buf));
-    abAppend(&ab,"\x1b[?25h",6); /* Show cursor. */
+    abAppend(&ab,"\x1b[?25h",6); /* 顯示光標 */
     write(STDOUT_FILENO,ab.b,ab.len);
     abFree(&ab);
 }
 
-/* Set an editor status message for the second line of the status, at the
- * end of the screen. */
+/* 為狀態的第二行設置編輯器狀態消息，在畫面結束 */
 void editorSetStatusMessage(const char *fmt, ...) {
     va_list ap;
     va_start(ap,fmt);
@@ -980,9 +962,9 @@ void editorSetStatusMessage(const char *fmt, ...) {
 void editorFind(int fd) {
     char query[KILO_QUERY_LEN+1] = {0};
     int qlen = 0;
-    int last_match = -1; /* Last line where a match was found. -1 for none. */
-    int find_next = 0; /* if 1 search next, if -1 search prev. */
-    int saved_hl_line = -1;  /* No saved HL */
+    int last_match = -1; /* 找到匹配項的最後一行， -1 沒有 */
+    int find_next = 0; /* 如果 1 搜索下一個，如果 -1 搜索上一個 */
+    int saved_hl_line = -1;  /* 沒有保存的 HL */
     char *saved_hl = NULL;
 
 #define FIND_RESTORE_HL do { \
@@ -993,7 +975,7 @@ void editorFind(int fd) {
     } \
 } while (0)
 
-    /* Save the cursor position in order to restore it later. */
+    /* 保存光標位置以便以後恢復 */
     int saved_cx = E.cx, saved_cy = E.cy;
     int saved_coloff = E.coloff, saved_rowoff = E.rowoff;
 
