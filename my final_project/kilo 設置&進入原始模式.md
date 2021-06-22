@@ -1,4 +1,9 @@
-# kilo 
+# 📝 期末作業
+>主題:kilo
+>作者:劉怡謙
+>學號:110810519
+>作品:並非100%原創
+
 ## 📖 安裝C編譯器
 * Windows
 需要在 Windows 中安裝某種 Linux 環境。這是因為我們的文本編輯器使用`<termios.h>`標頭在低級別與終端交互，這在 Windows 上不可用。
@@ -97,6 +102,8 @@ void enableRawMode() {
 }
 int main() { … }
 ```
+`atexit()`來自`<stdlib.h>`我們使用它來註冊 `disableRawMode()`要在程序退出時自動`main()`調用的`exit()` 函數
+* 我們將原始終端屬性存儲在全局變量中`orig_termios`。我們將`orig_termios`結構分配給`raw`結構，以便在開始進行更改之前製作它的副本
 
 ## 📖 
 ## 📖 
