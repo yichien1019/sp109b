@@ -1008,7 +1008,7 @@ void editorFind(int fd) {
             }
         }
 
-        /* Search occurrence. */
+        /* 搜索出現 */
         if (last_match == -1) find_next = 1;
         if (find_next) {
             char *match = NULL;
@@ -1027,7 +1027,7 @@ void editorFind(int fd) {
             }
             find_next = 0;
 
-            /* Highlight */
+            /* 強調 */
             FIND_RESTORE_HL;
 
             if (match) {
@@ -1043,7 +1043,7 @@ void editorFind(int fd) {
                 E.cx = match_offset;
                 E.rowoff = current;
                 E.coloff = 0;
-                /* Scroll horizontally as needed. */
+                /* 根據需要水平滾動 */
                 if (E.cx > E.screencols) {
                     int diff = E.cx - E.screencols;
                     E.cx -= diff;
@@ -1056,7 +1056,7 @@ void editorFind(int fd) {
 
 /* ========================= Editor events handling  ======================== */
 
-/* Handle cursor position change because arrow keys were pressed. */
+/* 由於按下了箭頭鍵，處理光標位置的變化 */
 void editorMoveCursor(int key) {
     int filerow = E.rowoff+E.cy;
     int filecol = E.coloff+E.cx;
@@ -1116,7 +1116,7 @@ void editorMoveCursor(int key) {
         }
         break;
     }
-    /* Fix cx if the current line has not enough chars. */
+    /* 如果當前行沒有足夠的字符，則修復 cx */
     filerow = E.rowoff+E.cy;
     filecol = E.coloff+E.cx;
     row = (filerow >= E.numrows) ? NULL : &E.row[filerow];
@@ -1130,12 +1130,10 @@ void editorMoveCursor(int key) {
     }
 }
 
-/* Process events arriving from the standard input, which is, the user
- * is typing stuff on the terminal. */
+/* 處理來自標準輸入的事件，即用戶在終端上打字 */
 #define KILO_QUIT_TIMES 3
 void editorProcessKeypress(int fd) {
-    /* When the file is modified, requires Ctrl-q to be pressed N times
-     * before actually quitting. */
+    /* 修改文件時，需要按N次Ctrl-q在實際退出之前 */
     static int quit_times = KILO_QUIT_TIMES;
 
     int c = editorReadKey(fd);
@@ -1144,11 +1142,10 @@ void editorProcessKeypress(int fd) {
         editorInsertNewline();
         break;
     case CTRL_C:        /* Ctrl-c */
-        /* We ignore ctrl-c, it can't be so simple to lose the changes
-         * to the edited file. */
+        /* 我們忽略ctrl-c，丟掉修改沒那麼簡單 * 到編輯過的文件 */
         break;
     case CTRL_Q:        /* Ctrl-q */
-        /* Quit if the file was already saved. */
+        /* 如果文件已經保存，則退出 */
         if (E.dirty && quit_times) {
             editorSetStatusMessage("WARNING!!! File has unsaved changes. "
                 "Press Ctrl-Q %d more times to quit.", quit_times);
@@ -1188,18 +1185,18 @@ void editorProcessKeypress(int fd) {
     case ARROW_RIGHT:
         editorMoveCursor(c);
         break;
-    case CTRL_L: /* ctrl+l, clear screen */
-        /* Just refresht the line as side effect. */
+    case CTRL_L: /* ctrl+l，清屏 */
+        /* 只是刷新行作為副作用 */
         break;
     case ESC:
-        /* Nothing to do for ESC in this mode. */
+        /* 在此模式下與 ESC 無關 */
         break;
     default:
         editorInsertChar(c);
         break;
     }
 
-    quit_times = KILO_QUIT_TIMES; /* Reset it to the original value. */
+    quit_times = KILO_QUIT_TIMES; /* 將其重置為原始值 */
 }
 
 int editorFileWasModified(void) {
@@ -1212,7 +1209,7 @@ void updateWindowSize(void) {
         perror("Unable to query the screen for size (columns / rows)");
         exit(1);
     }
-    E.screenrows -= 2; /* Get room for status bar. */
+    E.screenrows -= 2; /* 為狀態欄騰出空間 */
 }
 
 void handleSigWinCh(int unused __attribute__((unused))) {
