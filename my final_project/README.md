@@ -37,10 +37,18 @@ clean:
 ```
 
 ## 💻 程式實際操作結果
-![]()
-![]()
+![](pic/kilo1.JPG)
+![](pic/kilo2.JPG)
 #### The result of execution
 ```
+user@user:~/sp109b/my final_project$ ls
+kilo2.c  kilo.c  Makefile  README.md  test.c  構建文本編輯器
+user@user:~/sp109b/my final_project$ make
+cc -o kilo kilo.c -Wall -W -pedantic -std=c99
+cc -o kilo2 kilo2.c -Wall -W -pedantic -std=c99
+user@user:~/sp109b/my final_project$ ls
+kilo  kilo2  kilo2.c  kilo.c  Makefile  README.md  test.c  構建文本編輯器
+user@user:~/sp109b/my final_project$ ./kilo2 test.c
 ```
 
 ## 📖 參考資料
