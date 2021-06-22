@@ -19,8 +19,8 @@ CTRL-F: Find string in file (ESC to exit search, arrows to navigate)
 ## 執行結果
 
 ## 📖 參考資料
-https://github.com/antirez/kilo
-https://viewsourcecode.org/snaptoken/kilo/
+* https://github.com/antirez/kilo
+* https://viewsourcecode.org/snaptoken/kilo/
 
 
 🖊️ editor : yi-chien Liu
