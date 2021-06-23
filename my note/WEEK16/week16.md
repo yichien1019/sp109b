@@ -81,8 +81,7 @@ add:
 
 ##### add.elf(轉換成 ELF 格式的目的檔，再用 objdump 程式將其反組譯回組合語言)
 ![](pic/addelf.JPG)
-* 4 碼的代表 16 bits 的壓縮模式指令 (一個十六進位對應到 4 個二進位，4*4=16bit)
-* 8碼的代表標準的 32 bits 指令
+* 先安裝`apt-get install qemu-system-riscv32`
 ```
 user@user:~/sp/10-riscv/02-sp/02-gcc$ riscv64-unknown-elf-gcc -c add.s -o add.elf
 user@user:~/sp/10-riscv/02-sp/02-gcc$  riscv64-unknown-elf-objdump -d add.elf
@@ -110,6 +109,8 @@ Disassembly of section .text:
   24:	6105                	addi	sp,sp,32
   26:	8082                	ret
 ```
+* 4 碼的代表 16 bits 的壓縮模式指令 (一個十六進位對應到 4 個二進位，4*4=16bit)
+* 8碼的代表標準的 32 bits 指令
 
 ### 🔗 08-posix/04-fs/00-basic/io1
 
@@ -137,7 +138,7 @@ Disassembly of section .text:
 🖊️editor : yi-chien Liu
 
 
-apt-get install qemu-system-riscv32
+
 
 https://www.facebook.com/ccckmit/videos/10159045756766893
 https://www.facebook.com/ccckmit/videos/10159045827521893
