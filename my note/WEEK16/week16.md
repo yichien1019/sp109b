@@ -35,7 +35,7 @@
 
 ## 💻 程式實際操作
 ### 🔗 10-riscv/02-sp/02-gcc
-
+#### The result of execution
 ##### add.c
 ```
 user@user:~/sp/10-riscv/02-sp/02-gcc$ cat add.c 
@@ -44,7 +44,7 @@ int add(int a, int b) {
 }
 ```
 ##### add.s(使用 riscv64-unknown-elf-gcc 編譯為組合語言)
-![](pic/adds.JPG)
+![](pic/gccadds.JPG)
 * 這就是一個 RISC-V 的組合語言檔
 ```
 user@user:~/sp/10-riscv/02-sp/02-gcc$ riscv64-unknown-elf-gcc -S add.c -o add.s
@@ -80,7 +80,7 @@ add:
 ```
 
 ##### add.elf(轉換成 ELF 格式的目的檔，再用 objdump 程式將其反組譯回組合語言)
-![](pic/addelf.JPG)
+![](pic/gccaddelf.JPG)
 * 先安裝`apt-get install qemu-system-riscv32`
 ```
 user@user:~/sp/10-riscv/02-sp/02-gcc$ riscv64-unknown-elf-gcc -c add.s -o add.elf
@@ -112,22 +112,109 @@ Disassembly of section .text:
 * 4 碼的代表 16 bits 的壓縮模式指令 (一個十六進位對應到 4 個二進位，4*4=16bit)
 * 8碼的代表標準的 32 bits 指令
 
-### 🔗 08-posix/04-fs/00-basic/io1
-
-![](pic/io1.JPG)
-<details>
-  <summary><b>Show code</b></summary>
-
-  ```
-
-  ```
-</details>
-
+### 🔗 sp/10-riscv/02-sp/03-asm
+![](pic/asmadd.JPG)
 #### The result of execution
+```
+user@user:~/sp/10-riscv/02-sp/03-asm$ cat add.s
+main:
+  addi x29, x0, 5
+  addi x30, x0, 37
+  add x31, x30, x29
+user@user:~/sp/10-riscv/02-sp/03-asm$ make
+riscv64-unknown-elf-gcc -Wl,-Ttext=0x0 -nostdlib -o add.elf add.s
+/usr/lib/riscv64-unknown-elf/bin/ld: warning: cannot find entry symbol _start; defaulting to 0000000000000000
+riscv64-unknown-elf-objcopy -O binary add.elf add.bin
+riscv64-unknown-elf-objdump -d add.elf
+
+add.elf:     file format elf64-littleriscv
 
 
+Disassembly of section .text:
 
+0000000000000000 <main>:
+   0:	00500e93          	li	t4,5
+   4:	02500f13          	li	t5,37
+   8:	01df0fb3          	add	t6,t5,t4
+```
 
+### 🔗 sp/10-riscv/02-sp/04-hello/virt
+#### The result of execution
+```
+user@user:~/sp/10-riscv/02-sp/04-hello/virt$ chmod +x run.sh
+user@user:~/sp/10-riscv/02-sp/04-hello/virt$ ./run.sh
+Hello.
+QEMU 4.2.1 monitor - type 'help' for more information
+(qemu) quit
+```
+
+### 🔗 sp/10-riscv/03-mini-riscv-os/01-HelloOs
+#### The result of execution
+```
+user@user:~/sp/10-riscv/03-mini-riscv-os/01-HelloOs$ make
+riscv64-unknown-elf-gcc -nostdlib -fno-builtin -mcmodel=medany -march=rv32ima -mabi=ilp32 -T os.ld -o os.elf start.s os.c
+guest@localhost:~/sp/10-riscv/03-mini-riscv-os/01-HelloOs$ make qemu
+Press Ctrl-A and then X to exit QEMU
+qemu-system-riscv32 -nographic -smp 4 -machine virt -bios none -kernel os.elf
+Hello OS!
+QEMU: Terminated
+```
+
+### 🔗 user@user:~/sp/10-riscv/03-mini-riscv-os/02-ContextSwitch
+#### The result of execution
+```
+user@user:~/sp/10-riscv/03-mini-riscv-os/02-ContextSwitch$ make
+riscv64-unknown-elf-gcc -nostdlib -fno-builtin -mcmodel=medany -march=rv32ima -mabi=ilp32 -T os.ld -o os.elf start.s sys.s lib.c os.c
+guest@localhost:~/sp/10-riscv/03-mini-riscv-os/02-ContextSwitch$ make qemu
+Press Ctrl-A and then X to exit QEMU
+qemu-system-riscv32 -nographic -smp 4 -machine virt -bios none -kernel os.elf
+OS start
+Task0: Context Switch Success !
+QEMU: Terminated
+```
+
+### 🔗 user@user:~/sp/10-riscv/03-mini-riscv-os/03-MultiTasking
+#### The result of execution
+```
+user@user:~/sp/10-riscv/03-mini-riscv-os/03-MultiTasking$ make
+riscv64-unknown-elf-gcc -nostdlib -fno-builtin -mcmodel=medany -march=rv32ima -mabi=ilp32 -T os.ld -o os.elf start.s sys.s lib.c task.c os.c user.c
+user@user:~/sp/10-riscv/03-mini-riscv-os/03-MultiTasking$ make qemu
+Press Ctrl-A and then X to exit QEMU
+qemu-system-riscv32 -nographic -smp 4 -machine virt -bios none -kernel os.elf
+OS start
+OS: Activate next task
+Task0: Created!
+Task0: Now, return to kernel mode
+OS: Back to OS
+
+OS: Activate next task
+Task1: Created!
+Task1: Now, return to kernel mode
+OS: Back to OS
+
+OS: Activate next task
+Task0: Running...
+OS: Back to OS
+```
+
+### 🔗 sp/10-riscv/03-mini-riscv-os/01-HelloOs
+#### The result of execution
+```
+
+```
+
+### 🔗 sp/10-riscv/03-mini-riscv-os/01-HelloOs
+#### The result of execution
+```
+
+```
+
+### 🔗 sp/10-riscv/03-mini-riscv-os/01-HelloOs
+#### The result of execution
+```
+
+```
+  
 
 ## 📖 參考資料
 * [RISC-V](https://zh.wikipedia.org/wiki/RISC-V#%E6%8C%87%E4%BB%A4%E5%AD%90%E9%9B%86)
@@ -137,8 +224,4 @@ Disassembly of section .text:
 
 🖊️editor : yi-chien Liu
 
-
-
-
-https://www.facebook.com/ccckmit/videos/10159045756766893
 https://www.facebook.com/ccckmit/videos/10159045827521893
