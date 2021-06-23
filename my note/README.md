@@ -20,7 +20,7 @@
 | 第十七週 | 20210623 | [WEEK17](https://github.com/yichien1019/sp109b/blob/main/my%20note/WEEK17/week17.md) | <ul><li>程式實際操作<ul> |
 
 ## 🌟 授權申明
-* [授權申明](https://github.com/yichien1019/sp109b/blob/main/my%20note/WEEK17/week17.md)
+* [授權申明](https://github.com/yichien1019/sp109b/blob/main/my%20note/LICENSE.md)
 
 
 
