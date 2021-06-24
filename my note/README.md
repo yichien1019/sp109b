@@ -10,7 +10,7 @@
 | 第七週 | 20210414 | [WEEK7](https://github.com/yichien1019/sp109b/blob/main/my%20note/WEEK7/week7.md) | <ul><li>UNIX<li>vim<li>程式實際操作<ul> |
 | 第八週 | 20210421 | [WEEK8](https://github.com/yichien1019/sp109b/blob/main/my%20note/WEEK8/week8.md) | <ul><li>作業系統<li>行程(process)<li>JVM & DVM<li>程式實際操作<ul> |
 | 第九週 | 20210428 | [WEEK9](https://github.com/yichien1019/sp109b/blob/main/my%20note/WEEK9/week9.md) | <ul><li>單行程系統&多工系統<li>Process & Thread<li>記憶體管理<li>記憶體管理單元(MMU)硬體<li>程式實際操作<ul> |
-| 第十週 | 20210505 | [WEEK10](https://github.com/yichien1019/sp109b/blob/main/my%20note/WEEK10/week10.md) | <ul><li>程式實際操作<ul> |
+| 第十週 | 20210505 | [WEEK10](https://github.com/yichien1019/sp109b/blob/main/my%20note/WEEK10/week10.md) | <ul><li>Producer Consumer(生產者消費者問題)<li>semaphore<li>程式實際操作<ul> |
 | 第十一週 | 20210512 | [WEEK11](https://github.com/yichien1019/sp109b/blob/main/my%20note/WEEK11/week11.md) | <ul><li>程式實際操作<ul> |
 | 第十二週 | 20210519 | [WEEK12](https://github.com/yichien1019/sp109b/blob/main/my%20note/WEEK12/week12.md) | <ul><li>程式實際操作<ul> |
 | 第十三週 | 20210526 | [WEEK13](https://github.com/yichien1019/sp109b/blob/main/my%20note/WEEK13/week13.md) | <ul><li>HTTP協定<li>程式實際操作<ul> |

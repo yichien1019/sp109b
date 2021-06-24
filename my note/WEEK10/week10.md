@@ -1,6 +1,15 @@
 # 📝系統程式第十週筆記20210505
-## 📖 Producer Consumer（生產者消費者問題）
+## 📖 Producer Consumer(生產者消費者問題)
+![](pic/procon.JPG)
+* 也稱有限緩衝問題，是一個多進程同步問題的經典案例
+* 生產者的主要作用是生成一定量的數據放到緩衝區中，然後重複此過程。與此同時，消費者也在緩衝區消耗這些數據。該問題的關鍵就是要保證生產者不會在緩衝區滿時加入數據，消費者也不會在緩衝區中空時消耗數據
+
 ## 📖 semaphore
+![](pic/sem.JPG)
+* 提供平行運算環境中，控制多個 process 或 thread 存取共享資源的能力
+* mutex是拿來保護資料的，semaphore是用來讓process(thread)間進行同步的
+* 兩種操作，分別是V(增加記數)和P(減少記數)，V操作又稱為signal()，P操作又稱為wait()
+
 ## 💻 程式實際操作
 ### 🔗 08-posix/02-thread/producerConsumer 
 ![](pic/producerConsumer.JPG)
