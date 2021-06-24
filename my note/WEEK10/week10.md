@@ -3,7 +3,7 @@
 ## 📖 semaphore
 ## 💻 程式實際操作
 ### 🔗 08-posix/02-thread/producerConsumer 
-![](pic/producerConsumer.jpg)
+![](pic/producerConsumer.JPG)
 <details>
   <summary><b>Show code</b></summary>
 
@@ -123,7 +123,7 @@ incremented in!
 ```
 
 ### 🔗 08-posix/02-thread/philospher 
-![](pic/philospher.jpg)<details>
+![](pic/philospher.JPG)<details>
   <summary><b>Show code</b></summary>
 
   ```
