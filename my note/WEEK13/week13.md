@@ -2,7 +2,7 @@
 ## HTTP協定
 ### 🔖 何謂傳輸協定？
 以人類來說，在台灣，我們多數使用的是繁體中文，國際之間常見的溝通語言則是英文，套用到機器之間也會有既定的格式和語法。
-### 🔖  HTTP 的組成結構
+### 🔖 HTTP 的組成結構
 HTTP 的組成結構，分別是 HTTP Request 與 HTTP Response 這兩個大項目
 ![](pic/http1.png)
 #### 請求時的HTTP Request

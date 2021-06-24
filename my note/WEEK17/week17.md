@@ -1,9 +1,14 @@
 # 📝系統程式第十七週筆記20210623
+## 📖 UNIX
+![](pic/unix.png)
+UNIX作業系統，是一個強大的多使用者、多工作業系統，支援多種處理器架構，按照作業系統的分類，屬於分時作業系統，最早由肯·湯普遜、丹尼斯·里奇和道格拉斯·麥克羅伊於1969年在AT&T的貝爾實驗室開發
+
+### 🔖 UNIX常用指令介紹
+* 請參考此[連結](http://www2.thu.edu.tw/~cc/network_team/unix/command.htm)
 
 ## 💻 程式實際操作
 ### 🔗 sp/10-riscv/04-xv6os/xv6
 ![](pic/xv6.JPG)
-
 #### The result of execution
 ```
 user@user:~/sp/10-riscv/04-xv6os/xv6$ make qemu
@@ -72,6 +77,7 @@ $ QEMU 4.2.1 monitor - type 'help' for more information
 #### The result of execution
 
 
-
+## 📖 參考資料
+* [UNIX](https://zh.wikipedia.org/wiki/UNIX)
 
 🖊️editor : yi-chien Liu
