@@ -1,4 +1,8 @@
 # 📓109系統程式統整筆記區  
+#### ⚠️ 注意 : 
+每一週筆記接包含由[陳鍾誠的《系統程式》課程內容](https://gitlab.com/ccc109/sp/)的程式碼，以便於結合筆記閱讀
+
+## 💭 目錄
 |  Week  |  Date  |  Note  | Content | 
 | ------ | ------ | ------ | ------ |
 | 第一週 | 20210224 | [WEEK1](https://github.com/yichien1019/sp109b/blob/main/my%20note/WEEK1/week1.md) | <ul><li>評分方式<li>系統程式&系統軟體<li>什麼是gcc<li>什麼是Makefile<li>什麼是Markdown<li>編譯式語言 & 直譯式語言<li>GCC開發環境 |
@@ -16,8 +20,8 @@
 | 第十三週 | 20210526 | [WEEK13](https://github.com/yichien1019/sp109b/blob/main/my%20note/WEEK13/week13.md) | <ul><li>HTTP協定<li>程式實際操作<ul> |
 | 第十四週 | 20210602 | [WEEK14](https://github.com/yichien1019/sp109b/blob/main/my%20note/WEEK14/week14.md) | <ul><li>程式實際操作<ul> |
 | 第十五週 | 20210609 | [WEEK15](https://github.com/yichien1019/sp109b/blob/main/my%20note/WEEK15/week15.md) | <ul><li>TCP & UDP<li>程式實際操作<ul> |
-| 第十六週 | 20210616 | [WEEK16](https://github.com/yichien1019/sp109b/blob/main/my%20note/WEEK16/week16.md) | <ul><li>程式實際操作<ul> |
-| 第十七週 | 20210623 | [WEEK17](https://github.com/yichien1019/sp109b/blob/main/my%20note/WEEK17/week17.md) | <ul><li>程式實際操作<ul> |
+| 第十六週 | 20210616 | [WEEK16](https://github.com/yichien1019/sp109b/blob/main/my%20note/WEEK16/week16.md) | <ul><li>RISC-V 處理器<li>程式實際操作<ul> |
+| 第十七週 | 20210623 | [WEEK17](https://github.com/yichien1019/sp109b/blob/main/my%20note/WEEK17/week17.md) | <ul><li>xv6<li>程式實際操作<ul> |
 
 ## 🌟 授權申明
 * [授權申明](https://github.com/yichien1019/sp109b/blob/main/my%20note/LICENSE.md)

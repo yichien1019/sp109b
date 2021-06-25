@@ -3,7 +3,7 @@
 * xv6是在ANSI C中針對多處理器x86系統的Unix第六版的現代重新實現
 * xv6 Makefile的一個特性是能夠以可讀的格式生成整個原始碼清單的PDF文檔
 
-## 📖 RISC-V
+## 📖 
 
 ## 💻 程式實際操作
 ### 🔗 sp/10-riscv/04-xv6os/xv6
@@ -15,8 +15,8 @@ qemu-system-riscv64 -machine virt -bios none -kernel kernel/kernel -m 256M -smp 
 
 xv6 kernel is booting
 
-hart 1 starting
 hart 2 starting
+hart 1 starting
 init: starting sh
 $ ls
 .              1 1 1024
@@ -39,7 +39,8 @@ grind          2 16 38016
 wc             2 17 25120
 zombie         2 18 22280
 console        3 19 0
-hello.txt      2 20 8
+yc             1 20 48
+hello.txt      2 22 8
 $ echo 'qemu' > qemu.txt
 $ ls
 .              1 1 1024
@@ -62,14 +63,15 @@ grind          2 16 38016
 wc             2 17 25120
 zombie         2 18 22280
 console        3 19 0
-hello.txt      2 20 8
-qemu.txt       2 21 7
+yc             1 20 48
+hello.txt      2 22 8
+qemu.txt       2 23 7
 $ cat qemu.txt
 'qemu'
-$ QEMU 4.2.1 monitor - type 'help' for more information
-(qemu) quit
+$ QEMU: Terminated
 ```
-
+##### 補充 : qemu退出方式
+* `Ctrl-A-X` 三個鍵不要一起按，需要注意`Ctrl-A`同時按住抬起後再按`X`
 ### 🔗 sp/10-riscv/04-xv6os/xv6
 ![](pic/.JPG)
 
