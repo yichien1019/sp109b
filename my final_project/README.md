@@ -54,6 +54,38 @@ user@user:~/sp109b/my final_project$ ls
 kilo  kilo2  kilo2.c  kilo.c  Makefile  README.md  test.c  構建文本編輯器
 user@user:~/sp109b/my final_project$ ./kilo2 test.c
 ```
+```
+if (x>5)
+{
+    t=1;
+}
+else if (x<=0){
+    t=2;
+}
+else{
+    t=3;
+}
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+test.c - 10 lines                                                          1/10
+HELP: Ctrl-S = save | Ctrl-Q = quit
+```
 
 ## 📖 參考資料
 * https://github.com/antirez/kilo
