@@ -373,7 +373,7 @@ void editorUpdateSyntax(erow *row) {
     while(*p) {
         /* 處理 // 註釋 */
         if (prev_sep && *p == scs[0] && *(p+1) == scs[1]) {
-            /* From here to end is a comment */
+            /* 從這裡到結束是評論 */
             memset(row->hl+i,HL_COMMENT,row->size-i);
             return;
         }
