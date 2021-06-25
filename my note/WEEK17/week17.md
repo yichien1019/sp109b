@@ -3,8 +3,6 @@
 * xv6是在ANSI C中針對多處理器x86系統的Unix第六版的現代重新實現
 * xv6 Makefile的一個特性是能夠以可讀的格式生成整個原始碼清單的PDF文檔
 
-## 📖 
-
 ## 💻 程式實際操作
 ### 🔗 sp/10-riscv/04-xv6os/xv6
 ![](pic/xv6.JPG)
