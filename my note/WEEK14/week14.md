@@ -1,4 +1,9 @@
 # 📝系統程式第十四週筆記20210602
+## 📖 socket通訊
+![](pic/socket.JPG)
+* 是一種作業系統提供的行程間通訊機制
+* Socket 就是一個網路上的通訊端點，使用者或應用程式只要連接到 Socket 便可以和網路上任何一個通訊端點連線，Socket 之間通訊就如同作業系統內程序（Process）之間通訊一樣
+* 系統內部介面（內部網路），介面描述符（抽象介面描述符）和介面位址之間的差別其實很細微，日常編程用的時候幾乎不做區別
 
 ## 💻 程式實際操作
 ### 🔗 08-posix/08-ipc/02-fifo/chat
@@ -79,6 +84,8 @@ receive: hello how are you
 good!
 receive: nice
 ```
+##### 補充
+* fork()會將原本的父程序會分支出子程序，程式中子行程為讀取訊息，父行程為傳送訊息
 
 ### 🔗 08-posix/08-ipc/03-mmap/chat
 ![](pic/mmapchat.JPG)
@@ -151,6 +158,9 @@ nice!
 receive: how about you
 not bad
 ```
+##### 補充
+* 高速檔案存取，一般的I/O機制通常需要將資料先到緩區中，記憶體對映免去了中間這一層，加速檔案存取速度
+* 可執行檔可對映到記憶體空間中，使程式動態載入
 
 ### 🔗 08-posix/08-ipc/04-msg/chat
 ![](pic/msgchat.JPG)
@@ -316,6 +326,11 @@ receive: hi
 i am client!
 receive: i am server!
 ```
+##### 補充
+* 屬於非連接導向，直接通過socket通訊
+* 是一個簡單的面向資料報的通信協定，位於OSI模型的傳輸層
+* UDP適用於不需要或在程式中執行錯誤檢查和糾正的應用，它避免了協定棧中此類處理的開銷
+* 對時間有較高要求的應用程式通常使用UDP，因為丟棄封包比等待或重傳導致延遲更可取
 
 ### 🔗 08-posix/08-ipc/06-tcp/chat
 ![](pic/udpchat.JPG)
@@ -407,6 +422,11 @@ receive: hello
 i am client!!!
 receive: i am server!!!
 ```
+
+## 📖 參考資料
+* [socket通訊](https://zh.wikipedia.org/wiki/%E7%B6%B2%E8%B7%AF%E6%8F%92%E5%BA%A7)
+* [何謂Socket](https://bluelove1968.pixnet.net/blog/post/222279898)
+* [翻轉工作室 第八章 TCP Socket 程式介面](http://www.tsnien.idv.tw/Internet_WebBook/chap8/8-1%20Socket%20%E7%B0%A1%E4%BB%8B.html)
 
 
 🖊️editor : yi-chien Liu

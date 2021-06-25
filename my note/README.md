@@ -1,6 +1,6 @@
 # 📓109系統程式統整筆記區  
 #### ⚠️ 注意 : 
-每一週筆記接包含由[陳鍾誠的《系統程式》課程內容](https://gitlab.com/ccc109/sp/)的程式碼，以便於結合筆記閱讀，如果要執行程式碼，請到[陳鍾誠系統程式](https://gitlab.com/ccc109/sp/)自行clone且操作。
+每一週筆記接包含由[陳鍾誠的《系統程式》課程內容](https://gitlab.com/ccc109/sp/)的程式碼，以便於結合筆記閱讀，如果要執行程式碼，請到[陳鍾誠系統程式](https://gitlab.com/ccc109/sp/)自行clone再操作。
 
 ## 💭 目錄
 |  Week  |  Date  |  Note  | Content | 
@@ -18,7 +18,7 @@
 | 第十一週 | 20210512 | [WEEK11](https://github.com/yichien1019/sp109b/blob/main/my%20note/WEEK11/week11.md) | <ul><li>程式實際操作<ul> |
 | 第十二週 | 20210519 | [WEEK12](https://github.com/yichien1019/sp109b/blob/main/my%20note/WEEK12/week12.md) | <ul><li>程式實際操作<ul> |
 | 第十三週 | 20210526 | [WEEK13](https://github.com/yichien1019/sp109b/blob/main/my%20note/WEEK13/week13.md) | <ul><li>HTTP協定<li>程式實際操作<ul> |
-| 第十四週 | 20210602 | [WEEK14](https://github.com/yichien1019/sp109b/blob/main/my%20note/WEEK14/week14.md) | <ul><li>程式實際操作<ul> |
+| 第十四週 | 20210602 | [WEEK14](https://github.com/yichien1019/sp109b/blob/main/my%20note/WEEK14/week14.md) | <ul><li>socket通訊<li>程式實際操作<ul> |
 | 第十五週 | 20210609 | [WEEK15](https://github.com/yichien1019/sp109b/blob/main/my%20note/WEEK15/week15.md) | <ul><li>TCP & UDP<li>程式實際操作<ul> |
 | 第十六週 | 20210616 | [WEEK16](https://github.com/yichien1019/sp109b/blob/main/my%20note/WEEK16/week16.md) | <ul><li>RISC-V 處理器<li>程式實際操作<ul> |
 | 第十七週 | 20210623 | [WEEK17](https://github.com/yichien1019/sp109b/blob/main/my%20note/WEEK17/week17.md) | <ul><li>xv6<li>程式實際操作<ul> |
