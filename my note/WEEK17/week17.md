@@ -72,12 +72,13 @@ $ QEMU 4.2.1 monitor - type 'help' for more information
 ```
 
 ### 🔗 sp/10-riscv/04-xv6os/xv6
-![](pic/xv6.JPG)
+![](pic/.JPG)
 
 #### The result of execution
 
 
 ## 📖 參考資料
 * [UNIX](https://zh.wikipedia.org/wiki/UNIX)
+
 
 🖊️editor : yi-chien Liu
