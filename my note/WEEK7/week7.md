@@ -3,6 +3,10 @@
 ![](pic/unixhistory.jpg)
 * 簡介 : UNIX作業系統，是一個強大的多使用者、多工作業系統，支援多種處理器架構，按照作業系統的分類，屬於分時作業系統
 * 最早由肯·湯普遜、丹尼斯·里奇和道格拉斯·麥克羅伊於1969年在AT&T的貝爾實驗室開發
+
+### 🔖 UNIX常用指令介紹
+* 請參考此[連結](http://www2.thu.edu.tw/~cc/network_team/unix/command.htm)
+
 ## 📖 [vim](https://ipcmen.com/vi-vim)
 ![](pic/vim鍵盤圖.gif)
 
