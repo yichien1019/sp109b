@@ -2,6 +2,23 @@
 * 使用老師給的sp/03-compiler/03b-compiler2的compiler.c修改for
 * 有更新原本的[Makefile](Makefile)檔，可以直接make
 
+### 修改後的[Makefile](Makefile)
+```
+CC := gcc
+CFLAGS = -std=c99 -O0
+TARGET = compiler1 compiler2
+
+all: $(TARGET)
+
+compiler1: lexer.c compiler1.c main.c
+	$(CC) $(CFLAGS) $^ -o $@
+compiler2: lexer.c compiler2.c main.c
+	$(CC) $(CFLAGS) $^ -o $@
+
+clean:
+	rm -f *.o *.exe
+```
+
 ### 修改的for部分 1.0
 ```
 // F = (E) | Number | Id
